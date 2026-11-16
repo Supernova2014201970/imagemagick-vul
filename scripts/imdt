@@ -1,0 +1,25 @@
+#!/bin/bash
+# imdt — the delivery command set for the ImageMagick ARVO dataset.
+#
+#   imdt build [DIR]              plain build of the baseline (default /src/imagemagick)
+#   imdt verify                   all 68 PoCs on the baseline; every one must crash
+#                                 -> reports/verify.json, pass=false for all entries
+#   imdt verify-one <pocId>       that one PoC on the baseline; must crash
+#                                 -> reports/verify-one.json, pass=false
+#
+# `pass` means the PoC did not crash the tree under test, in every report.
+# Extras go to the scripts: --report DIR, and --patched for verify-one (baseline +
+# that case's patch, where pass must be true).  The full attribution run is
+# verify-one-by-one.sh (about 100 minutes).
+set -uo pipefail
+. "$(dirname "$0")/lib.sh"
+
+usage() { sed -n '4,9p' "$0"; }
+cmd=${1:-}; if [ $# -gt 0 ]; then shift; fi
+case "$cmd" in
+  build)      "$IMDT_HOME/build.sh" "${1:-$TREE}" ;;
+  verify)     "$IMDT_HOME/verify.sh" "$@" ;;
+  verify-one) [ $# -gt 0 ] || { usage; exit 1; }; "$IMDT_HOME/verify-one.sh" "$@" ;;
+  -h|--help)  usage ;;
+  *)          [ -z "$cmd" ] || echo "error: unknown command '$cmd'" >&2; usage >&2; exit 1 ;;
+esac

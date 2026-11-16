@@ -1,0 +1,13 @@
+diff --git a/MagickCore/profile.c b/MagickCore/profile.c
+index cdfc41b..185bc3d 100644
+--- a/MagickCore/profile.c
++++ b/MagickCore/profile.c
+@@ -1853,7 +1853,7 @@ static MagickBooleanType Sync8BimProfile(Image *image,StringInfo *profile)
+       return(MagickFalse);
+     id=ReadProfileMSBShort(&p,&length);
+     count=(ssize_t) ReadProfileByte(&p,&length);
+-    if ((count > (ssize_t) length) || (count < 0))
++    if ((count >= (ssize_t) length) || (count < 0))
+       return(MagickFalse);
+     p+=count;
+     if ((*p & 0x01) == 0)

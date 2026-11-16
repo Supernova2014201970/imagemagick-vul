@@ -1,0 +1,40 @@
+diff --git a/coders/dcm.c b/coders/dcm.c
+index 40f1568..aa83b8d 100644
+--- a/coders/dcm.c
++++ b/coders/dcm.c
+@@ -3932,7 +3932,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
+           for (i=0; i < (ssize_t) colors; i++)
+           {
+             index=redmap[i];
+-            if ((info.scale != (Quantum *) NULL) &&
++            if ((info.scale != (Quantum *) NULL) && (index >= 0) &&
+                 (index <= (int) info.max_value))
+               index=(int) info.scale[index];
+             image->colormap[i].red=(MagickRealType) index;
+@@ -3941,7 +3941,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
+           for (i=0; i < (ssize_t) colors; i++)
+           {
+             index=greenmap[i];
+-            if ((info.scale != (Quantum *) NULL) &&
++            if ((info.scale != (Quantum *) NULL) && (index >= 0) &&
+                 (index <= (int) info.max_value))
+               index=(int) info.scale[index];
+             image->colormap[i].green=(MagickRealType) index;
+@@ -3950,7 +3950,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
+           for (i=0; i < (ssize_t) colors; i++)
+           {
+             index=bluemap[i];
+-            if ((info.scale != (Quantum *) NULL) &&
++            if ((info.scale != (Quantum *) NULL) && (index >= 0) &&
+                 (index <= (int) info.max_value))
+               index=(int) info.scale[index];
+             image->colormap[i].blue=(MagickRealType) index;
+@@ -3959,7 +3959,7 @@ static Image *ReadDCMImage(const ImageInfo *image_info,ExceptionInfo *exception)
+           for (i=0; i < (ssize_t) colors; i++)
+           {
+             index=graymap[i];
+-            if ((info.scale != (Quantum *) NULL) &&
++            if ((info.scale != (Quantum *) NULL) && (index >= 0) &&
+                 (index <= (int) info.max_value))
+               index=(int) info.scale[index];
+             image->colormap[i].red=(MagickRealType) index;

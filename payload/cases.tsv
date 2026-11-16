@@ -1,0 +1,80 @@
+# localId	coder	sanitizer	alert	expect_frame	poc	patch	fix_commit
+# One row per ARVO case; every case is one PoC run against the single baseline tree
+# (/src/imagemagick at upstream 13ffeabe9abd6c262a8b6bfaeb1e145a420f8e3a).
+# coder        ImageMagick coder name handed to the reproducer at run time
+# sanitizer    which instrumented reproducer runs this case (address|undefined|memory)
+# alert        ARVO crash_type of the case, verbatim; what verify-one compares the
+#              sanitizer report against, and what reports/*.json carries as "alert"
+# expect_frame ARVO #0 function (informational: the SUMMARY wording varies on replay)
+# poc          PoC bytes, relative to /payload
+# patch        this case's single fix patch, relative to /payload; verify-one.sh applies
+#              exactly that one patch on top of the baseline and expects a clean run
+# fix_commit   upstream commit that fixes the case; 68 cases -> 62 unique patches
+42518038	G3	undefined	Index-out-of-bounds	HuffmanEncodeImage	pocs/42518038/poc	patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch	e8be814f1c3d267012d2f612b3366bfb5029414d
+42518438	CIN	address	Heap-buffer-overflow READ 1	ImportQuantumPixels	pocs/42518438/poc	patches/9998cd719775e90f9989fd1ecaa84647a56c1b57.patch	9998cd719775e90f9989fd1ecaa84647a56c1b57
+42518471	MIFF	memory	Use-of-uninitialized-value	GetXMPProperty	pocs/42518471/poc	patches/af223b025da2ffb56a4e50160448e845f9b5e186.patch	af223b025da2ffb56a4e50160448e845f9b5e186
+42518560	TXT	memory	Use-of-uninitialized-value	QueueAuthenticPixelCacheNexus	pocs/42518560/poc	patches/169a3ff38425613b156015c23056c4adf0dbf221.patch	169a3ff38425613b156015c23056c4adf0dbf221
+42518649	PALM	memory	Use-of-uninitialized-value	IsFuzzyEquivalencePixelInfo	pocs/42518649/poc	patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch	e8be814f1c3d267012d2f612b3366bfb5029414d
+42518894	WPG	memory	Use-of-uninitialized-value	WritePixelCacheRegion	pocs/42518894/poc	patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch	e8be814f1c3d267012d2f612b3366bfb5029414d
+42519182	SUN	address	Heap-buffer-overflow WRITE 8	SetGrayscaleImage	pocs/42519182/poc	patches/bb4e7e8919573caf70bd5af3330e991ddbad0c92.patch	bb4e7e8919573caf70bd5af3330e991ddbad0c92
+42519338	WPG	memory	Use-of-uninitialized-value	ConstrainColormapIndex	pocs/42519338/poc	patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch	e8be814f1c3d267012d2f612b3366bfb5029414d
+42519416	SIXEL	address	Heap-buffer-overflow WRITE {*}	ResetMagickMemory	pocs/42519416/poc	patches/614d7b140cd03a0d38f76ae55a7fcb2c9d76012a.patch	614d7b140cd03a0d38f76ae55a7fcb2c9d76012a
+42519504	EPSI	address	Heap-buffer-overflow READ 1	ParseEntities	pocs/42519504/poc	patches/1f55115e43f7276a6d91bd4408dd4a6ef45d6be5.patch	1f55115e43f7276a6d91bd4408dd4a6ef45d6be5
+42519749	SIX	address	UNKNOWN WRITE	sixel_decode	pocs/42519749/poc	patches/8e5432bdc67c377c620f5d8d3dedfb62854f567c.patch	8e5432bdc67c377c620f5d8d3dedfb62854f567c
+42519760	PES	address	Stack-buffer-overflow WRITE 8	ReadPESImage	pocs/42519760/poc	patches/3c8e8dbc5f8f617fa902cffaa90368beb96fd8a4.patch	3c8e8dbc5f8f617fa902cffaa90368beb96fd8a4
+42519771	TIM	memory	Use-of-uninitialized-value	PushColormapIndex	pocs/42519771/poc	patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch	e8be814f1c3d267012d2f612b3366bfb5029414d
+42519915	MIFF	memory	Use-of-uninitialized-value	LocaleNCompare	pocs/42519915/poc	patches/008465f1b8eb05752f8482e9cc2a073f0e978f09.patch	008465f1b8eb05752f8482e9cc2a073f0e978f09
+42520316	EPS	address	Heap-buffer-overflow READ 1	ParseInternalDoctype	pocs/42520316/poc	patches/3b30dbea8817d45471ec132014a3bc44e05fdf97.patch	3b30dbea8817d45471ec132014a3bc44e05fdf97
+42520493	DXT5	address	Heap-buffer-overflow WRITE 4	SetPixelRed	pocs/42520493/poc	patches/147814adf1c657f647ee7e73027dbedde5ac2467.patch	147814adf1c657f647ee7e73027dbedde5ac2467
+42520871	EPS	memory	Use-of-uninitialized-value	ParseEntities	pocs/42520871/poc	patches/82c58c138e2ffc1f170db711b07627ee621c2a22.patch	82c58c138e2ffc1f170db711b07627ee621c2a22
+42520948	DCM	memory	Use-of-uninitialized-value	IsPixelGray	pocs/42520948/poc	patches/4435dbb1f398e3bf4ab1c1f8905d42b7701a7cca.patch	4435dbb1f398e3bf4ab1c1f8905d42b7701a7cca
+42520971	PDB	memory	Use-of-uninitialized-value	ReadPDBImage	pocs/42520971/poc	patches/487f950075ae21b4634a04cb28c2f47f95d62963.patch	487f950075ae21b4634a04cb28c2f47f95d62963
+42521159	TXT	memory	Use-of-uninitialized-value	ScaleQuantumToChar	pocs/42521159/poc	patches/0897510362611886bfe296f8ab5d9aa1f82558cf.patch	0897510362611886bfe296f8ab5d9aa1f82558cf
+42521170	WPG	memory	Use-of-uninitialized-value	SetPixelViaPixelInfo	pocs/42521170/poc	patches/02eee091d2023d91d15d271ac9e6fe049a6e4c5f.patch	02eee091d2023d91d15d271ac9e6fe049a6e4c5f
+42521270	PCX	memory	Use-of-uninitialized-value	IsPixelMonochrome	pocs/42521270/poc	patches/a5136e6c737e76e613da9241d7ecb273d84787d0.patch	a5136e6c737e76e613da9241d7ecb273d84787d0
+42521591	MVG	address	Stack-buffer-overflow WRITE 1	GetNextToken	pocs/42521591/poc	patches/c9a75ec387eb3c1f3c9584b97260d72512868b1b.patch	c9a75ec387eb3c1f3c9584b97260d72512868b1b
+42521846	PICT	memory	Use-of-uninitialized-value	ConstrainColormapIndex	pocs/42521846/poc	patches/21baa90e1854413d109512c3cda5242511e5a14a.patch	21baa90e1854413d109512c3cda5242511e5a14a
+42521858	PALM	memory	Use-of-uninitialized-value	IsFuzzyEquivalencePixelInfo	pocs/42521858/poc	patches/ecd8728428d460b13821cc8e80aef671011329c7.patch	ecd8728428d460b13821cc8e80aef671011329c7
+42521880	VIFF	memory	Use-of-uninitialized-value	ScaleQuantumToChar	pocs/42521880/poc	patches/391d3afd588b94f9ee2c5e4a70f5e9197e5afb21.patch	391d3afd588b94f9ee2c5e4a70f5e9197e5afb21
+42522269	WBMP	memory	Use-of-uninitialized-value	ReadWBMPImage	pocs/42522269/poc	patches/21e1ac88739dbf99be45782de0dc299b162fcdf5.patch	21e1ac88739dbf99be45782de0dc299b162fcdf5
+42522303	WPG	memory	Use-of-uninitialized-value	SetPixelViaPixelInfo	pocs/42522303/poc	patches/ce433f8048b120b2a0413b4ac3ef59fca35a9788.patch	ce433f8048b120b2a0413b4ac3ef59fca35a9788
+42522513	MVG	memory	Use-of-uninitialized-value	GetFillAlpha	pocs/42522513/poc	patches/8bb46b3381f8440fbf90bd88e1909dc83e089790.patch	8bb46b3381f8440fbf90bd88e1909dc83e089790
+42522869	PALM	memory	Use-of-uninitialized-value	ScaleQuantumToChar	pocs/42522869/poc	patches/73c6cc1f8da1d7f3647056f293c5a10da019c9b7.patch	73c6cc1f8da1d7f3647056f293c5a10da019c9b7
+42523358	PNM	memory	Use-of-uninitialized-value	IsPixelEquivalent	pocs/42523358/poc	patches/23246df8dfdebe0002bf9abfa0a5490238300ad9.patch	23246df8dfdebe0002bf9abfa0a5490238300ad9
+42523502	VIFF	memory	Use-of-uninitialized-value	PushColormapIndex	pocs/42523502/poc	patches/60cb93d03a9fec83087f803fab877293f1ca12fd.patch	60cb93d03a9fec83087f803fab877293f1ca12fd
+42523812	DPX	memory	Use-of-uninitialized-value	ScaleQuantumToShort	pocs/42523812/poc	patches/9e74769caca25bc62707772ef15de9a510609bf2.patch	9e74769caca25bc62707772ef15de9a510609bf2
+42523868	MAT	memory	Use-of-uninitialized-value	IsPixelGray	pocs/42523868/poc	patches/79ef217ff11ad37e45946bb17ab1d4f3311066c7.patch	79ef217ff11ad37e45946bb17ab1d4f3311066c7
+42523879	PSD	address	Negative-size-param	CopyMagickMemory	pocs/42523879/poc	patches/6f7924965f38eeaa43901d6c7b3d7a9157ccd1e1.patch	6f7924965f38eeaa43901d6c7b3d7a9157ccd1e1
+42524289	MVG	address	Heap-buffer-overflow WRITE 8	TracePoint	pocs/42524289/poc	patches/2ebcbdbaee0a9bdfa0f11f9b47774668537ea709.patch	2ebcbdbaee0a9bdfa0f11f9b47774668537ea709
+42524701	XCF	memory	Use-of-uninitialized-value	ClampPixel	pocs/42524701/poc	patches/4fc95b7c4291ec9216929c525cc3e6ed55b39149.patch	4fc95b7c4291ec9216929c525cc3e6ed55b39149
+42525613	PSD	memory	Use-of-uninitialized-value	ScaleQuantumToShort	pocs/42525613/poc	patches/79de802e7586ab4339b7b81e3d3501d5fcffd57a.patch	79de802e7586ab4339b7b81e3d3501d5fcffd57a
+42525647	MIFF	memory	Use-of-uninitialized-value	GetEXIFProperty	pocs/42525647/poc	patches/78eaf41a792bb35a8b9e7ac4f72d86a8cb7d6d0a.patch	78eaf41a792bb35a8b9e7ac4f72d86a8cb7d6d0a
+42525669	MIFF	memory	Use-of-uninitialized-value	LocaleNCompare	pocs/42525669/poc	patches/78eaf41a792bb35a8b9e7ac4f72d86a8cb7d6d0a.patch	78eaf41a792bb35a8b9e7ac4f72d86a8cb7d6d0a
+42525880	HDR	address	Stack-buffer-overflow READ {*}	WriteBlob	pocs/42525880/poc	patches/07e656c7089f3b3ae30a71a042fb903c83e077b6.patch	07e656c7089f3b3ae30a71a042fb903c83e077b6
+42526335	GIF	memory	Use-of-uninitialized-value	Sync8BimProfile	pocs/42526335/poc	patches/6d4a20030385c8e42f7a3fa89c84556b5fc896d7.patch	6d4a20030385c8e42f7a3fa89c84556b5fc896d7
+42526424	EPSI	address	Heap-buffer-overflow READ 1	ParseInternalDoctype	pocs/42526424/poc	patches/5f68b29b843b3c57f61b34e1db8f3144af458614.patch	5f68b29b843b3c57f61b34e1db8f3144af458614
+42526757	PS	address	Heap-buffer-overflow READ 1	NewXMLTree	pocs/42526757/poc	patches/ba9e36555434ebe9da38a1341cfd9f304a326348.patch	ba9e36555434ebe9da38a1341cfd9f304a326348
+42527322	PICT	memory	Use-of-uninitialized-value	ScaleQuantumToChar	pocs/42527322/poc	patches/820e6361927e3bfa346ce085311d001681863a23.patch	820e6361927e3bfa346ce085311d001681863a23
+42527699	GIF	memory	Use-of-uninitialized-value	Sync8BimProfile	pocs/42527699/poc	patches/7a98246a075d55f2eb5bad40028a28f3cfdd97c1.patch	7a98246a075d55f2eb5bad40028a28f3cfdd97c1
+42527789	MIFF	address	Stack-buffer-overflow READ 1	QueryColorCompliance	pocs/42527789/poc	patches/ff0cea4290cb1421cb174f2f26ca03789377a6fb.patch	ff0cea4290cb1421cb174f2f26ca03789377a6fb
+42528177	MIFF	memory	Use-of-uninitialized-value	QueryColorCompliance	pocs/42528177/poc	patches/557cb22f90e3543cca8414a1dfa074e0e026e4c3.patch	557cb22f90e3543cca8414a1dfa074e0e026e4c3
+42528200	PCX	memory	Use-of-uninitialized-value	ScaleQuantumToChar	pocs/42528200/poc	patches/fda26c312b8d99e0cfaa82233741946c1206de81.patch	fda26c312b8d99e0cfaa82233741946c1206de81
+42528610	SUN	memory	Use-of-uninitialized-value	ScaleQuantumToChar	pocs/42528610/poc	patches/5960b92b652b51cc53852e7ba3c9b65abceb0452.patch	5960b92b652b51cc53852e7ba3c9b65abceb0452
+42529799	MIFF	memory	Use-of-uninitialized-value	WriteMIFFImage	pocs/42529799/poc	patches/56a19e7ae07f40299f3afd4994d690f2c9b81993.patch	56a19e7ae07f40299f3afd4994d690f2c9b81993
+42530943	MVG	address	Heap-buffer-overflow WRITE 8	TracePoint	pocs/42530943/poc	patches/b78a613f16150d6db3b055731211f467756bc412.patch	b78a613f16150d6db3b055731211f467756bc412
+42530977	HDR	memory	Use-of-uninitialized-value	ReadHDRImage	pocs/42530977/poc	patches/686c45509c81d3ecae9cdb34225689b3be97de55.patch	686c45509c81d3ecae9cdb34225689b3be97de55
+42531054	MIFF	memory	Use-of-uninitialized-value	WriteMIFFImage	pocs/42531054/poc	patches/bf04de5d0e66f630dd0c184b478a299854f2d032.patch	bf04de5d0e66f630dd0c184b478a299854f2d032
+42531466	DCM	address	Heap-buffer-overflow READ 4	ReadDCMImage	pocs/42531466/poc	patches/e79350c54735fd1051bd0b153ef277a13a7b9618.patch	e79350c54735fd1051bd0b153ef277a13a7b9618
+42532777	SCR	memory	Use-of-uninitialized-value	ReadSCRImage	pocs/42532777/poc	patches/164af31c8d4d5afd0a5a6a7e27078b5d579adc56.patch	164af31c8d4d5afd0a5a6a7e27078b5d579adc56
+42533154	VIFF	memory	Use-of-uninitialized-value	ReadVIFFImage	pocs/42533154/poc	patches/60cb93d03a9fec83087f803fab877293f1ca12fd.patch	60cb93d03a9fec83087f803fab877293f1ca12fd
+42533821	MIFF	memory	Use-of-uninitialized-value	ScaleQuantumToChar	pocs/42533821/poc	patches/11c7f47df7cbe2e672c8a975aa1c003d92f4fdc9.patch	11c7f47df7cbe2e672c8a975aa1c003d92f4fdc9
+42533954	PCDS	memory	Use-of-uninitialized-value	ClampPixel	pocs/42533954/poc	patches/2cf74b529c34f2e5915c946e2f4a06f4c292f4c8.patch	2cf74b529c34f2e5915c946e2f4a06f4c292f4c8
+42533966	MAC	memory	Use-of-uninitialized-value	PushColormapIndex	pocs/42533966/poc	patches/990431dbe7688861ad46a7b8d6cb9d173b429cbd.patch	990431dbe7688861ad46a7b8d6cb9d173b429cbd
+42534188	WPG	memory	Use-of-uninitialized-value	ConstrainColormapIndex	pocs/42534188/poc	patches/a85ab26099152be3dab0bd377670abfc815b9fe7.patch	a85ab26099152be3dab0bd377670abfc815b9fe7
+42534522	TIM	memory	Use-of-uninitialized-value	PushColormapIndex	pocs/42534522/poc	patches/f472c0ae74c136284adbbcfe25f628be2da8a02b.patch	f472c0ae74c136284adbbcfe25f628be2da8a02b
+42534621	PDB	memory	Use-of-uninitialized-value	PushColormapIndex	pocs/42534621/poc	patches/0100b8013536d7836566642d69d521fba1d15cf6.patch	0100b8013536d7836566642d69d521fba1d15cf6
+42534921	MVG	address	Heap-buffer-overflow WRITE {*}	DrawDashPolygon	pocs/42534921/poc	patches/7a03766efc1f45cf13cbd435902d86c3f321368e.patch	7a03766efc1f45cf13cbd435902d86c3f321368e
+42535088	MVG	address	Heap-buffer-overflow WRITE 4	DrawDashPolygon	pocs/42535088/poc	patches/3c96caf391336735dd15331267694d52a6d3ecd1.patch	3c96caf391336735dd15331267694d52a6d3ecd1
+42535232	RLE	memory	Use-of-uninitialized-value	ConstantString	pocs/42535232/poc	patches/73aad72d1d28170b38014168f523d0ee2941c21e.patch	73aad72d1d28170b38014168f523d0ee2941c21e
+42535688	PDB	memory	Use-of-uninitialized-value	WritePDBImage	pocs/42535688/poc	patches/771e54d106ce5ff043e7812b4182f3c08a748001.patch	771e54d106ce5ff043e7812b4182f3c08a748001
+42537011	MVG	address	Heap-buffer-overflow WRITE {*}	DrawDashPolygon	pocs/42537011/poc	patches/8239e79ee4c8cc34034838eefe4f34bab02c5fc7.patch	8239e79ee4c8cc34034838eefe4f34bab02c5fc7

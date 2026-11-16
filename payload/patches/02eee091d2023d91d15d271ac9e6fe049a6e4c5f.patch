@@ -1,0 +1,18 @@
+diff --git a/coders/wpg.c b/coders/wpg.c
+index 56f96d3..af7a987 100644
+--- a/coders/wpg.c
++++ b/coders/wpg.c
+@@ -1378,7 +1378,12 @@ static Image *ReadWPGImage(const ImageInfo *image_info,
+ 
+                     for (i=0; i< (ssize_t) image->rows; i++)
+                     {
+-                      (void) ReadBlob(image,ldblk,BImgBuff);
++                      ssize_t
++                        count;
++
++                      count=ReadBlob(image,(size_t) ldblk,BImgBuff);
++                      if (count != ldblk)
++                        break;
+                       if (InsertRow(image,BImgBuff,i,bpp,exception) == MagickFalse)
+                         {
+                           if(BImgBuff)

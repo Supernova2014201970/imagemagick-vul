@@ -1,0 +1,13 @@
+diff --git a/coders/pcx.c b/coders/pcx.c
+index 798c301..9b1cdb3 100644
+--- a/coders/pcx.c
++++ b/coders/pcx.c
+@@ -417,6 +417,8 @@ static Image *ReadPCXImage(const ImageInfo *image_info,ExceptionInfo *exception)
+           pixel_info=RelinquishVirtualMemory(pixel_info);
+         ThrowPCXException(ResourceLimitError,"MemoryAllocationFailed");
+       }
++    (void) ResetMagickMemory(scanline,0,(size_t) MagickMax(image->columns,
++      pcx_info.bytes_per_line)*MagickMax(8,pcx_info.planes)*sizeof(*scanline));
+     pixels=(unsigned char *) GetVirtualMemoryBlob(pixel_info);
+     /*
+       Uncompress image data.
