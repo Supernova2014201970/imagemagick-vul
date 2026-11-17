@@ -1,17 +1,12 @@
-{"pass": 68, "fail": 0, "results": [
-  {"poc": "42518038", "patch": "e8be814f1c3d267012d2f612b3366bfb5029414d.patch", "pass": true, "alert": "Index-out-of-bounds"},
+{"pass": 63, "fail": 0, "results": [
   {"poc": "42518438", "patch": "9998cd719775e90f9989fd1ecaa84647a56c1b57.patch", "pass": true, "alert": "Heap-buffer-overflow READ 1"},
   {"poc": "42518471", "patch": "af223b025da2ffb56a4e50160448e845f9b5e186.patch", "pass": true, "alert": "Use-of-uninitialized-value"},
   {"poc": "42518560", "patch": "169a3ff38425613b156015c23056c4adf0dbf221.patch", "pass": true, "alert": "Use-of-uninitialized-value"},
-  {"poc": "42518649", "patch": "e8be814f1c3d267012d2f612b3366bfb5029414d.patch", "pass": true, "alert": "Use-of-uninitialized-value"},
-  {"poc": "42518894", "patch": "e8be814f1c3d267012d2f612b3366bfb5029414d.patch", "pass": true, "alert": "Use-of-uninitialized-value"},
   {"poc": "42519182", "patch": "bb4e7e8919573caf70bd5af3330e991ddbad0c92.patch", "pass": true, "alert": "Heap-buffer-overflow WRITE 8"},
-  {"poc": "42519338", "patch": "e8be814f1c3d267012d2f612b3366bfb5029414d.patch", "pass": true, "alert": "Use-of-uninitialized-value"},
   {"poc": "42519416", "patch": "614d7b140cd03a0d38f76ae55a7fcb2c9d76012a.patch", "pass": true, "alert": "Heap-buffer-overflow WRITE {*}"},
   {"poc": "42519504", "patch": "1f55115e43f7276a6d91bd4408dd4a6ef45d6be5.patch", "pass": true, "alert": "Heap-buffer-overflow READ 1"},
   {"poc": "42519749", "patch": "8e5432bdc67c377c620f5d8d3dedfb62854f567c.patch", "pass": true, "alert": "UNKNOWN WRITE"},
   {"poc": "42519760", "patch": "3c8e8dbc5f8f617fa902cffaa90368beb96fd8a4.patch", "pass": true, "alert": "Stack-buffer-overflow WRITE 8"},
-  {"poc": "42519771", "patch": "e8be814f1c3d267012d2f612b3366bfb5029414d.patch", "pass": true, "alert": "Use-of-uninitialized-value"},
   {"poc": "42519915", "patch": "008465f1b8eb05752f8482e9cc2a073f0e978f09.patch", "pass": true, "alert": "Use-of-uninitialized-value"},
   {"poc": "42520316", "patch": "3b30dbea8817d45471ec132014a3bc44e05fdf97.patch", "pass": true, "alert": "Heap-buffer-overflow READ 1"},
   {"poc": "42520493", "patch": "147814adf1c657f647ee7e73027dbedde5ac2467.patch", "pass": true, "alert": "Heap-buffer-overflow WRITE 4"},

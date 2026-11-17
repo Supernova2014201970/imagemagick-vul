@@ -33,11 +33,6 @@
 static void apply_fuzzing_limits() {
   Magick::SecurityPolicy::maxMemoryRequest(256000000);
   Magick::ResourceLimits::memory(1000000000);
-#ifdef HARNESS_FIXED_LIMITS
-  // fixed 树的 utils.cc 多了这两行（e8be814f），5 条案例靠它们才算"修好"
-  Magick::ResourceLimits::width(2048);
-  Magick::ResourceLimits::height(2048);
-#endif
 }
 
 static void run_one(const std::string &coder, const unsigned char *data, size_t size) {

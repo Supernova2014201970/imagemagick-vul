@@ -9,20 +9,15 @@
 # poc          PoC bytes, relative to /payload
 # patch        this case's single fix patch, relative to /payload; verify-one.sh applies
 #              exactly that one patch on top of the baseline and expects a clean run
-# fix_commit   upstream commit that fixes the case; 68 cases -> 62 unique patches
-42518038	G3	undefined	Index-out-of-bounds	HuffmanEncodeImage	pocs/42518038/poc	patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch	e8be814f1c3d267012d2f612b3366bfb5029414d
+# fix_commit   upstream commit that fixes the case; 63 cases -> 61 unique patches
 42518438	CIN	address	Heap-buffer-overflow READ 1	ImportQuantumPixels	pocs/42518438/poc	patches/9998cd719775e90f9989fd1ecaa84647a56c1b57.patch	9998cd719775e90f9989fd1ecaa84647a56c1b57
 42518471	MIFF	memory	Use-of-uninitialized-value	GetXMPProperty	pocs/42518471/poc	patches/af223b025da2ffb56a4e50160448e845f9b5e186.patch	af223b025da2ffb56a4e50160448e845f9b5e186
 42518560	TXT	memory	Use-of-uninitialized-value	QueueAuthenticPixelCacheNexus	pocs/42518560/poc	patches/169a3ff38425613b156015c23056c4adf0dbf221.patch	169a3ff38425613b156015c23056c4adf0dbf221
-42518649	PALM	memory	Use-of-uninitialized-value	IsFuzzyEquivalencePixelInfo	pocs/42518649/poc	patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch	e8be814f1c3d267012d2f612b3366bfb5029414d
-42518894	WPG	memory	Use-of-uninitialized-value	WritePixelCacheRegion	pocs/42518894/poc	patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch	e8be814f1c3d267012d2f612b3366bfb5029414d
 42519182	SUN	address	Heap-buffer-overflow WRITE 8	SetGrayscaleImage	pocs/42519182/poc	patches/bb4e7e8919573caf70bd5af3330e991ddbad0c92.patch	bb4e7e8919573caf70bd5af3330e991ddbad0c92
-42519338	WPG	memory	Use-of-uninitialized-value	ConstrainColormapIndex	pocs/42519338/poc	patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch	e8be814f1c3d267012d2f612b3366bfb5029414d
 42519416	SIXEL	address	Heap-buffer-overflow WRITE {*}	ResetMagickMemory	pocs/42519416/poc	patches/614d7b140cd03a0d38f76ae55a7fcb2c9d76012a.patch	614d7b140cd03a0d38f76ae55a7fcb2c9d76012a
 42519504	EPSI	address	Heap-buffer-overflow READ 1	ParseEntities	pocs/42519504/poc	patches/1f55115e43f7276a6d91bd4408dd4a6ef45d6be5.patch	1f55115e43f7276a6d91bd4408dd4a6ef45d6be5
 42519749	SIX	address	UNKNOWN WRITE	sixel_decode	pocs/42519749/poc	patches/8e5432bdc67c377c620f5d8d3dedfb62854f567c.patch	8e5432bdc67c377c620f5d8d3dedfb62854f567c
 42519760	PES	address	Stack-buffer-overflow WRITE 8	ReadPESImage	pocs/42519760/poc	patches/3c8e8dbc5f8f617fa902cffaa90368beb96fd8a4.patch	3c8e8dbc5f8f617fa902cffaa90368beb96fd8a4
-42519771	TIM	memory	Use-of-uninitialized-value	PushColormapIndex	pocs/42519771/poc	patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch	e8be814f1c3d267012d2f612b3366bfb5029414d
 42519915	MIFF	memory	Use-of-uninitialized-value	LocaleNCompare	pocs/42519915/poc	patches/008465f1b8eb05752f8482e9cc2a073f0e978f09.patch	008465f1b8eb05752f8482e9cc2a073f0e978f09
 42520316	EPS	address	Heap-buffer-overflow READ 1	ParseInternalDoctype	pocs/42520316/poc	patches/3b30dbea8817d45471ec132014a3bc44e05fdf97.patch	3b30dbea8817d45471ec132014a3bc44e05fdf97
 42520493	DXT5	address	Heap-buffer-overflow WRITE 4	SetPixelRed	pocs/42520493/poc	patches/147814adf1c657f647ee7e73027dbedde5ac2467.patch	147814adf1c657f647ee7e73027dbedde5ac2467

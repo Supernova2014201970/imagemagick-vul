@@ -1,15 +1,15 @@
 # 交付件清单
 
-核对日期：2026-11-16。此清单依据当前磁盘内容生成；项目根目录的版本管理元数据 `.git/` 不计入交付清单。`src/` 单独汇总（如包含源码仓库自身的 Git 元数据，则计入源码汇总），其余文件逐项记录字节数与 SHA256。
+核对日期：2026-11-16。此清单依据当前磁盘内容生成；项目根目录的版本管理元数据 `.git/` 不计入交付清单。`src/` 单独汇总（包含源码仓库自身的 Git 元数据），其余文件逐项记录字节数与 SHA256。
 
 ## 1. 当前交付内容
 
 | 项目 | 数量 | 字节数 |
 | --- | --- | --- |
 | 源码副本 `src/` | 2438 个文件 | 226160825 |
-| 修复补丁 | 62 个文件 | 80955 |
-| PoC 输入 | 68 个文件 | 697128 |
-| 有效案例索引 | 68 条 | 见下方 cases.tsv |
+| 修复补丁 | 61 个文件 | 80558 |
+| PoC 输入 | 63 个文件 | 696868 |
+| 有效案例索引 | 63 条 | 见下方 cases.tsv |
 
 当前目录没有镜像 tar、tar 校验文件或 `.dockerignore`。旧版 tar 的大小、哈希、镜像 ID 及运行耗时不代表当前目录，本清单不再沿用。源码身份、构建命令、脚本职责、结果判据与已知局限见 [README.md](README.md)。
 
@@ -19,9 +19,8 @@
 
 | 文件 | 字节 | SHA256 |
 | --- | --- | --- |
-| `image/Dockerfile` | 4100 | `fba3cb55ac14b422729078dad7d5c4421720498605867dd9c1bca1ce6db27af5` |
-| `MANIFEST.md` | — | 自引用不入表 |
-| `payload/cases.tsv` | 13104 | `a49c5446138216a6a56d0e60925a80064ee2b708423d6ab5bb9ee74feb7171f6` |
+| `image/Dockerfile` | 4133 | `6ecd0cd92d5b4b62a327baa1dd59a856aad4a6a31928708b8de292bb4334dae9` |
+| `payload/cases.tsv` | 12193 | `328b5cf70704eb5a94e933d356c2ce87469222427e7d92f08d1f41ad9bd39a11` |
 | `payload/patches/008465f1b8eb05752f8482e9cc2a073f0e978f09.patch` | 14046 | `5f529072eafa4758a2d0f3ca54717fe55b6e646f4ef541dfa3ed51a8afb37dc5` |
 | `payload/patches/0100b8013536d7836566642d69d521fba1d15cf6.patch` | 485 | `9bf61a77f0075d8e8e87811e9f4b0e4d7ff42a507421e0c9c6dca5b78b92560a` |
 | `payload/patches/02eee091d2023d91d15d271ac9e6fe049a6e4c5f.patch` | 699 | `ab37acee28b099bc884d15bdaa602b5de310147779b00f950151d25ea07b9b28` |
@@ -79,24 +78,18 @@
 | `payload/patches/c9a75ec387eb3c1f3c9584b97260d72512868b1b.patch` | 427 | `458839e0e4c1eac5becbd85c548542e7a3d3a97c8718a753490e4c3ba96cb368` |
 | `payload/patches/ce433f8048b120b2a0413b4ac3ef59fca35a9788.patch` | 450 | `afdd165b9081fe803d2ce5db66d05d9350bdec8121225d099eff4ce7f075364f` |
 | `payload/patches/e79350c54735fd1051bd0b153ef277a13a7b9618.patch` | 2004 | `9ddd28afa3cddb87bf2d41cde62037dc725096fa747cc2ebfa0fe816266b182a` |
-| `payload/patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch` | 397 | `1aafa2ada7013c140befbc68aa740d31bf0f1dcde87eb034fa521cdd7eca3601` |
 | `payload/patches/ecd8728428d460b13821cc8e80aef671011329c7.patch` | 518 | `4754dd5954b27ee0ee73d914c48b1e4ab019079cf881edb2dc56ed1e2bb08a1e` |
 | `payload/patches/f472c0ae74c136284adbbcfe25f628be2da8a02b.patch` | 4170 | `79b49d0c082f9ff87d80c62bd2d9a3dfb2f74b98d36f3b8b65954ae65db48aac` |
 | `payload/patches/fda26c312b8d99e0cfaa82233741946c1206de81.patch` | 610 | `a8e7858f912183c03f4f8285b27e40ba3bb7338f3d8a97c35970724c249a7b81` |
 | `payload/patches/ff0cea4290cb1421cb174f2f26ca03789377a6fb.patch` | 775 | `51dadedbf0c7909e1859d3cdf2bdce568d2ab16e46a504663af5ed4d55e4f1f4` |
-| `payload/pocs/42518038/poc` | 13 | `677ee38d942c1c0f1a3ba7ae8c6a67015f88b909fe2b6d537bb3dd4ee4df9ef7` |
 | `payload/pocs/42518438/poc` | 1028 | `7cf8460742c9666b329cd71e4b944e73074b1a8869608c87dc0bc3c541fb05c1` |
 | `payload/pocs/42518471/poc` | 13 | `61bd54c30bc8b0b6e5f8457676af965c41eaf54fc31e67444d33e5904ae035dc` |
 | `payload/pocs/42518560/poc` | 43 | `d4406c320a09998edba683670d3f7c236978f57ce7ca00f722eb12af403d87b3` |
-| `payload/pocs/42518649/poc` | 14 | `0833388c526c7be52cb139f54a7fb1cc824aae0a4ec1c045b1429b68bcd5f0e8` |
-| `payload/pocs/42518894/poc` | 107 | `cbedbe655f70e4e70419e81b38acf89eadd4a31cf88f46f608d81031e14535aa` |
 | `payload/pocs/42519182/poc` | 655416 | `41e65256a52649ae9e4cf2c0b7e6487470e2ef7276019b721dbbfa02707128f8` |
-| `payload/pocs/42519338/poc` | 60 | `f3c710164849b7f5a2e303b8d8a40b95e4a44b2bf97a0c04f7a1826181b2ae57` |
 | `payload/pocs/42519416/poc` | 276 | `881f7fd0c44e237d8125f9ae545ff92a66e119df29af18f74b77293d415a71b5` |
 | `payload/pocs/42519504/poc` | 54 | `8cffc42cc41664806f35ae8c00bfcba560a98569c6b25ca7b73716c04579b422` |
 | `payload/pocs/42519749/poc` | 15 | `b5f168d74a22d17d06416f9de6abb08a9b21b32d616e95977b863d364d324dad` |
 | `payload/pocs/42519760/poc` | 9060 | `827f29ca11ccc83f54646e627bdcca34396bbe29805dda69d8a31e701f2d4215` |
-| `payload/pocs/42519771/poc` | 66 | `dc85cad912da137d994b0b6b6c30c4b08d28c22b4d7d593d1c3f1b545ee8a897` |
 | `payload/pocs/42519915/poc` | 15 | `ddecec5a87903bdb71d448e0f7a736a8665f401098f24865bd2cac87140c6cc4` |
 | `payload/pocs/42520316/poc` | 69 | `3a467251816c1e9b7ad330117cf2a0624ae605d3344e485fa7c66bf913185cd9` |
 | `payload/pocs/42520493/poc` | 192 | `61767618c111520a2850864a14f2dbede1c2a3c54cb25c3fc4b329e3fc4e385f` |
@@ -152,19 +145,18 @@
 | `payload/pocs/42535232/poc` | 18 | `619860351263b9dc7949571cbd771fd47bc98622e124218dd78ef9834d237cec` |
 | `payload/pocs/42535688/poc` | 164 | `59d72c5bfe0d53814257e31b6ee6201571338b253418e8632000924afc66109e` |
 | `payload/pocs/42537011/poc` | 97 | `01215294ed857c185b370958fb78f21be3515bc125dde81fbdd824b50a119312` |
-| `payload/vulnerabilities.json` | 76848 | `e51451cecb6b8a04b56114b8d9ee5b93755b53019588454a0867fd711b5493d5` |
-| `README.md` | 15013 | `c90f411575ecb8fd828de55a17861fb08c8efb6f41ab0683f6035db89cddc48b` |
-| `SPECIFICATION.md` | 7036 | `641c989b8bde3aa1a81763ccea5be96c13ee985ec8a21f9162934316fb567f41` |
-| `reports/verify-one-by-one.json` | 9232 | `7b8e006912c0d01687627d1b9b3d05ef54b8379a1f5873706d6886e5060043bf` |
+| `payload/vulnerabilities.json` | 71520 | `ee117b4edb99c7d29f77cb595a7ea3cf25832604634cc12e248750819653b1ab` |
+| `README.md` | 16290 | `b59db4bc47de8a99c2afb06c29b7ddb9828ee06835f5ec5273e477a1b22f4669` |
+| `SPECIFICATION.md` | 7149 | `c10c41464ec57cc283c7c9670f4daa9697fc03005167fe50aa261fdc9fad3cee` |
+| `reports/verify-one-by-one.json` | 8564 | `2d990e36b7f9a91b895dc0ee753afb35499514d4c1b20a175e7c125abef12273` |
 | `reports/verify-one.json` | 116 | `a545298ed997051b1ff1b34d6e8f8c1f2a6dbb5d0e0e9decb2abafe96d893e15` |
-| `reports/verify.json` | 5288 | `79717b2a9db837ff0373b690ca831468e4059f38544982606931e86d63e9706d` |
+| `reports/verify.json` | 4910 | `ac9a6bfe2adba6a58103445b93a175084901975593e65c468891c52726179506` |
 | `scripts/build.sh` | 1228 | `b56a6e76948f9a1f7ff9d6535d7a5ebae160c668858d3612d385327bc55e6fe7` |
-| `scripts/hand_repro.cc` | 3015 | `09b9ca6bfb686cbc57540509be16f302fbede42dd26b62cd5c4904e182d18d35` |
-| `scripts/imdt` | 1211 | `0167c963bf817ed74028c98db9ab9f4683dcb110eb0816adaa096eb4de91035e` |
-| `scripts/lib.sh` | 8484 | `5c4c293b638dae3305514d03d6f106db4fd5b91699cd79ef2a91ba348e9ed496` |
-| `scripts/verify-one-by-one.sh` | 2008 | `f7babde454cb51ec0654202503145307c5947ddda71df1eb96487b37f451a247` |
-| `scripts/verify-one.sh` | 3032 | `fa6d69462a1ab777364b3bfa2e6eb184842716f990bf09cbb31269d4ec3a5bbe` |
-| `scripts/verify.sh` | 2092 | `0a4159461ad63e5d8ca847948c018b0265124e194b192c4171b4ddfec4b38fca` |
+| `scripts/hand_repro.cc` | 2807 | `bcf7c2a0b4997a9549327c7881e791f66fd113eb1beb14d8f5c4d28b2914e653` |
+| `scripts/lib.sh` | 7983 | `04272e99f086971835c32cf72ac68f87d00655da022ebf8af68950ecd974204c` |
+| `scripts/verify-one-by-one.sh` | 2227 | `ce61088cb2088e577dc5c792f3148601c4f5c7e7e42820b4bc5e9f6dbec15ec9` |
+| `scripts/verify-one.sh` | 3207 | `b7379e5d61b055a948b1ae64705f04cf61635e3f65655edd0e9361fe5c238376` |
+| `scripts/verify.sh` | 2297 | `baacfd7bc15cee3a0454ed5026e066a272806e97ac91e60f51bbe9e8ad959a8d` |
 
 ## 3. 校验方法
 
@@ -183,14 +175,14 @@ Linux 下可执行 `sha256sum README.md scripts/* reports/* image/Dockerfile`；
 
 | 报告 | pass 数 | fail 数 | results 数 |
 | --- | --- | --- | --- |
-| `reports/verify.json` | 0 | 68 | 68 |
+| `reports/verify.json` | 0 | 63 | 63 |
 | `reports/verify-one.json` | 0 | 1 | 1 |
-| `reports/verify-one-by-one.json` | 68 | 0 | 68 |
+| `reports/verify-one-by-one.json` | 63 | 0 | 63 |
 
-本次核对了案例数量、PoC/补丁引用路径、报告 JSON 统计和文件校验值，未重新运行 Docker 构建、补丁应用检查或漏洞复现。已有报告仅说明保存的结果；当前基线验证会混淆 ERROR 与 CRASH，且批量脚本不检查案例总数，详见 README 第 5 节。
+本次核对了案例数量、PoC/补丁引用路径、报告 JSON 统计和文件校验值。报告是 2026-11-16 在既有镜像内用本目录脚本对 `/src/imagemagick` 重跑得到的：基线 63 条全部崩溃，逐补丁 63 条全部不再崩溃。镜像没有重建。当前基线验证会混淆 ERROR 与 CRASH，且批量脚本不检查案例总数，详见 README 第 5 节。
 
 ## 5. 镜像交付布局
 
-Dockerfile 的目标是保留 `/src/imagemagick` 的真实基线检出与历史，将 payload、scripts、reports 复制进去，并预编译 ASan、UBSan、MSan 三个复现程序。构建时检查 62 个补丁、68 个 PoC、68 条案例、三个可执行程序和空的 `/work`，不运行完整 PoC 集。
+Dockerfile 的目标是保留 `/src/imagemagick` 的真实基线检出与历史，将 payload、scripts、reports 复制进去，并预编译 ASan、MSan 两个复现程序（随包案例不使用 UBSan）。构建时检查 61 个补丁、63 个 PoC、63 条案例、两个可执行程序和空的 `/work`，不运行完整 PoC 集。
 
-`verify-one-by-one.sh` 每次仅应用当前案例的补丁并测试当前 PoC；报告不证明其他 PoC 在该补丁下的结果。缓存按 `(源码指纹, sanitizer)` 区分，源码指纹使用提交 ID 和普通 `git diff`，不包含已暂存及未跟踪的修改。
+`verify-one-by-one.sh` 每次仅应用当前案例的补丁并测试当前 PoC；报告不证明其他 PoC 在该补丁下的结果。缓存按 `(源码指纹, sanitizer)` 区分，源码指纹使用提交 ID 和普通 `git diff`，不包含已暂存及未跟踪的修改。三个验证脚本都可用 `--tree DIR` 指向其他源码目录。

@@ -1,17 +1,12 @@
-{"pass": 0, "fail": 68, "results": [
-  {"poc": "42518038", "pass": false, "alert": "Index-out-of-bounds"},
+{"pass": 0, "fail": 63, "results": [
   {"poc": "42518438", "pass": false, "alert": "Heap-buffer-overflow READ 1"},
   {"poc": "42518471", "pass": false, "alert": "Use-of-uninitialized-value"},
   {"poc": "42518560", "pass": false, "alert": "Use-of-uninitialized-value"},
-  {"poc": "42518649", "pass": false, "alert": "Use-of-uninitialized-value"},
-  {"poc": "42518894", "pass": false, "alert": "Use-of-uninitialized-value"},
   {"poc": "42519182", "pass": false, "alert": "Heap-buffer-overflow WRITE 8"},
-  {"poc": "42519338", "pass": false, "alert": "Use-of-uninitialized-value"},
   {"poc": "42519416", "pass": false, "alert": "Heap-buffer-overflow WRITE {*}"},
   {"poc": "42519504", "pass": false, "alert": "Heap-buffer-overflow READ 1"},
   {"poc": "42519749", "pass": false, "alert": "UNKNOWN WRITE"},
   {"poc": "42519760", "pass": false, "alert": "Stack-buffer-overflow WRITE 8"},
-  {"poc": "42519771", "pass": false, "alert": "Use-of-uninitialized-value"},
   {"poc": "42519915", "pass": false, "alert": "Use-of-uninitialized-value"},
   {"poc": "42520316", "pass": false, "alert": "Heap-buffer-overflow READ 1"},
   {"poc": "42520493", "pass": false, "alert": "Heap-buffer-overflow WRITE 4"},

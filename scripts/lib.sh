@@ -56,12 +56,6 @@ src_fp() {
 
 baseline_commit() { git -C "$TREE" rev-parse HEAD || die "$TREE is not a git work tree"; }
 
-# e8be814f adds ResourceLimits::width(2048)/height(2048) to the tree's own
-# Magick++/fuzz/utils.cc, and 5 cases are "fixed" only because of that harness
-# limit.  The reproducer mirrors whatever the tree says, so it keeps running
-# under the harness that tree's own fuzz target would use.
-harness_limits() { grep -qs 'width(2048)' "$1/Magick++/fuzz/utils.cc" && echo "-DHARNESS_FIXED_LIMITS"; return 0; }
-
 # run_poc <san> <binary> <coder> <poc> -> "<verdict><TAB><summary>"
 #
 #   CRASH  the sanitizer reported (`SUMMARY:` line) — the bug is present
@@ -73,7 +67,7 @@ harness_limits() { grep -qs 'width(2048)' "$1/Magick++/fuzz/utils.cc" && echo "-
 # exactly like CLEAN.  Such a run is retried; a real crash always reports.
 run_poc() {
   local san=$1 bin=$2 coder=$3 poc=$4 out sum rc try
-  [ -x "$bin" ] || die "missing reproducer $bin (run: imdt verify)"
+  [ -x "$bin" ] || die "missing reproducer $bin (run: verify.sh)"
   [ -f "$poc" ] || die "missing PoC $poc"
   local envs; envs=$(san_env "$san")
   for try in 1 2 3 4 5 6 7 8 9 10; do
@@ -99,7 +93,7 @@ run_poc() {
 # thing on stdout, so callers can do bin=$(ensure_repro ...).  A finished
 # /out/repro-<fp>-<san> is the cache: the fingerprint already encodes the source.
 ensure_repro() {
-  local dir=${1:?} s fp bld inst bin base sanflags cflags plain lim
+  local dir=${1:?} s fp bld inst bin base sanflags cflags plain
   s=$(san_profile "${2:?}")
   [ -d "$dir" ] || die "no such source tree: $dir"
   [ -f "$dir/configure" ] || die "$dir/configure missing (it is tracked; never regenerate)"
@@ -116,7 +110,7 @@ ensure_repro() {
   ( cd "$dir" && tar -cf - --exclude=./.git . ) | ( cd "$bld/src" && tar -xf - ) ||
     die "cannot copy $dir"
   cd "$bld/src" || die "cannot enter $bld/src"
-  # An in-tree plain build (imdt build) leaves Makefile, config.status and object
+  # An in-tree plain build (build.sh) leaves Makefile, config.status and object
   # files behind: configure refuses to run next to config.status, and stale
   # objects would be reused with the wrong, non-instrumented flags.
   if [ -f Makefile ]; then make distclean > /dev/null 2>&1 || true; fi
@@ -135,7 +129,7 @@ ensure_repro() {
     > "$bld/install.log" 2>&1 || { tail -n 20 "$bld/install.log" >&2; die "make install failed ($fp/$s)"; }
 
   echo "link    $bin" >&2
-  clang++ $cflags -stdlib=libc++ $(san_link_extra "$s") -std=c++11 $(harness_limits "$dir") \
+  clang++ $cflags -stdlib=libc++ $(san_link_extra "$s") -std=c++11 \
     -I"$inst/include/ImageMagick-7" "$IMDT_HOME/hand_repro.cc" -o "$bin.new" \
     -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16 \
     "$inst/lib/libMagick++-7.Q16HDRI.a" "$inst/lib/libMagickWand-7.Q16HDRI.a" \
@@ -151,8 +145,7 @@ ensure_repro() {
     memory) grep -q '__msan_' "$bld/nm.txt" || die "$bin is not MSan-instrumented" ;;
     undefined) grep -q '__ubsan_' "$bld/nm.txt" || die "$bin is not UBSan-instrumented" ;;
   esac
-  lim=$(harness_limits "$dir")
-  echo "built   $bin ($(stat -c %s "$bin") bytes, $s, harness limits: ${lim:-none})" >&2
+  echo "built   $bin ($(stat -c %s "$bin") bytes, $s)" >&2
   printf '%s\n' "$bin"
 }
 

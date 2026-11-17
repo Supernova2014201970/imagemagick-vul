@@ -26,7 +26,6 @@
 │       └── <case_id>/
 │           └── poc
 ├── scripts/
-│   ├── imdt
 │   ├── lib.sh
 │   ├── build.sh
 │   ├── verify-one.sh
@@ -113,7 +112,7 @@
 要求：
 
 - `id` 与 TSV 的 `localId` 必须一一对应，集合一致，不能重复或缺失。
--  补丁正文不重复内嵌到 JSON 中。
+- `patch` 必须与 TSV 一致；补丁正文不重复内嵌到 JSON 中。
 - `before`、`after` 必须来自实际基线和应用随包补丁后的源码，不能仅按上游最新代码填写。
 - `location.line` 和 `code_snippet.line` 是各自片段在基线中的位置。
 - 未知的 CWE、源码位置、函数和片段允许使用 `null`，不得猜测填充；其他必需字段必须有效。
@@ -134,23 +133,23 @@ PoC 保存为 `payload/pocs/<case_id>/poc`，
 | 接口 | 职责 |
 | --- | --- |
 | `build.sh [DIR]` | 普通构建指定源码并检查产物，不运行 PoC |
-| `verify-one.sh ID` | 在基线上测试一个案例 |
-| `verify-one.sh ID --patched` | 复制基线、应用当前案例补丁，测试同一个 PoC |
-| `verify.sh` | 遍历全部案例，汇总基线结果 |
-| `verify-one-by-one.sh` | 遍历案例，分别验证各自补丁 |
-| `imdt` | 分发 `build`、`verify`、`verify-one` 命令 |
+| `verify-one.sh ID [--tree DIR]` | 在指定源码（缺省基线）上测试一个案例 |
+| `verify-one.sh ID --patched [--tree DIR]` | 复制指定源码、应用当前案例补丁，测试同一个 PoC |
+| `verify.sh [--tree DIR]` | 遍历全部案例，汇总基线结果 |
+| `verify-one-by-one.sh [--tree DIR]` | 遍历案例，分别验证各自补丁 |
 
 通用要求：
 
 - 普通编译与插桩编译必须使用独立产物，不得错误混用。
 - 补丁验证必须复制源码，不能修改原始基线；各案例补丁不累计。
+- 三个验证脚本必须能通过 `--tree DIR` 指向 `/src/<project>` 之外的源码目录，且不修改该目录。
 
 参考调用关系：
 
 ```text
-imdt build → build.sh → 普通 configure + make
-imdt verify → verify.sh → verify-one.sh
-verify-one-by-one.sh → verify-one.sh --patched
+build.sh → 普通 configure + make
+verify.sh → verify-one.sh --tree DIR
+verify-one-by-one.sh → verify-one.sh --patched --tree DIR
 ```
 
 ## 7. README 漏洞分布要求

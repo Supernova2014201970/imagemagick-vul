@@ -5,7 +5,7 @@
     "commit": "13ffeabe9abd6c262a8b6bfaeb1e145a420f8e3a",
     "describe": "7.0.7-21-82-g13ffeab",
     "date": "2018-01-16",
-    "note": "数据集只有这一个节点：镜像 /src/imagemagick 与随包 src/imagemagick 都是它的检出。68 个 PoC 在此节点全部崩溃；把某条案例的 patch 单独应用后再跑，就不再崩溃。"
+    "note": "数据集只有这一个节点：镜像 /src/imagemagick 与随包 src/imagemagick 都是它的检出。63 个 PoC 在此节点全部崩溃；把某条案例的 patch 单独应用后再跑，就不再崩溃。"
   },
   "paths": {
     "cases": "cases.tsv",
@@ -127,121 +127,6 @@
       },
       "description": "`coders/dds.c:2113`（`ReadDXT3Pixels`）：DXT3 解块的边界判断把行与列写反（x 比 image->rows、y 比 image->columns），宽高不相等时会写到像素缓存之外（heap-buffer-overflow WRITE 4，崩溃点内联在 pixel-accessor.h 的 SetPixelRed）；修复改为 x 对 image->columns、y 对 image->rows。",
       "patch": "patches/147814adf1c657f647ee7e73027dbedde5ac2467.patch"
-    },
-    {
-      "id": "42518038",
-      "type": {
-        "crash_type": "Index-out-of-bounds",
-        "cwe": "CWE-129",
-        "cwe_name": "Improper Validation of Array Index"
-      },
-      "location": {
-        "file": "MagickCore/compress.c",
-        "line": 835,
-        "function": "HuffmanEncodeImage"
-      },
-      "code_snippet": {
-        "file": "Magick++/fuzz/utils.cc",
-        "function": null,
-        "line": 6,
-        "before": "",
-        "after": "    Magick::ResourceLimits::width(2048);\n    Magick::ResourceLimits::height(2048);",
-        "fix_summary": "Magick++/fuzz/utils.cc：在 fuzz harness 设置资源上限（+2/-0 行）"
-      },
-      "description": "`MagickCore/compress.c:835`（`HuffmanEncodeImage`）：G3 编码路径上由未受限的图像尺寸导致数组索引越界；上游没有改库代码，只在 `Magick++/fuzz/utils.cc` 的 FuzzingLimits 里把 image width/height 限制为 2048 像素，超限输入在读取阶段即失败，不再进入编码器。",
-      "patch": "patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch"
-    },
-    {
-      "id": "42518649",
-      "type": {
-        "crash_type": "Use-of-uninitialized-value",
-        "cwe": "CWE-457",
-        "cwe_name": "Use of Uninitialized Variable"
-      },
-      "location": {
-        "file": "MagickCore/pixel.c",
-        "line": 6132,
-        "function": "IsFuzzyEquivalencePixelInfo"
-      },
-      "code_snippet": {
-        "file": "Magick++/fuzz/utils.cc",
-        "function": null,
-        "line": 6,
-        "before": "",
-        "after": "    Magick::ResourceLimits::width(2048);\n    Magick::ResourceLimits::height(2048);",
-        "fix_summary": "Magick++/fuzz/utils.cc：在 fuzz harness 设置资源上限（+2/-0 行）"
-      },
-      "description": "`MagickCore/pixel.c:6132`（`IsFuzzyEquivalencePixelInfo`）：PALM 输入走到该比较函数时读到了未初始化的像素值；上游没有改库代码，只在 `Magick++/fuzz/utils.cc` 的 FuzzingLimits 里把 image width/height 限制为 2048 像素，超限输入在读取阶段即失败。",
-      "patch": "patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch"
-    },
-    {
-      "id": "42518894",
-      "type": {
-        "crash_type": "Use-of-uninitialized-value",
-        "cwe": "CWE-457",
-        "cwe_name": "Use of Uninitialized Variable"
-      },
-      "location": {
-        "file": "MagickCore/cache.c",
-        "line": 3368,
-        "function": "WritePixelCacheRegion"
-      },
-      "code_snippet": {
-        "file": "Magick++/fuzz/utils.cc",
-        "function": null,
-        "line": 6,
-        "before": "",
-        "after": "    Magick::ResourceLimits::width(2048);\n    Magick::ResourceLimits::height(2048);",
-        "fix_summary": "Magick++/fuzz/utils.cc：在 fuzz harness 设置资源上限（+2/-0 行）"
-      },
-      "description": "`MagickCore/cache.c:3368`（`WritePixelCacheRegion`）：WPG 编码时把未初始化的像素区域写出；上游没有改库代码，只在 `Magick++/fuzz/utils.cc` 的 FuzzingLimits 里把 image width/height 限制为 2048 像素，超限输入在读取阶段即失败。",
-      "patch": "patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch"
-    },
-    {
-      "id": "42519338",
-      "type": {
-        "crash_type": "Use-of-uninitialized-value",
-        "cwe": "CWE-457",
-        "cwe_name": "Use of Uninitialized Variable"
-      },
-      "location": {
-        "file": "./MagickCore/colormap-private.h",
-        "line": 32,
-        "function": "ConstrainColormapIndex"
-      },
-      "code_snippet": {
-        "file": "Magick++/fuzz/utils.cc",
-        "function": null,
-        "line": 6,
-        "before": "",
-        "after": "    Magick::ResourceLimits::width(2048);\n    Magick::ResourceLimits::height(2048);",
-        "fix_summary": "Magick++/fuzz/utils.cc：在 fuzz harness 设置资源上限（+2/-0 行）"
-      },
-      "description": "`./MagickCore/colormap-private.h:32`（`ConstrainColormapIndex`）：WPG 解码用未初始化的调色板索引走到该内联函数；上游没有改库代码，只在 `Magick++/fuzz/utils.cc` 的 FuzzingLimits 里把 image width/height 限制为 2048 像素，超限输入在读取阶段即失败。",
-      "patch": "patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch"
-    },
-    {
-      "id": "42519771",
-      "type": {
-        "crash_type": "Use-of-uninitialized-value",
-        "cwe": "CWE-457",
-        "cwe_name": "Use of Uninitialized Variable"
-      },
-      "location": {
-        "file": "MagickCore/image.c",
-        "line": 3700,
-        "function": "PushColormapIndex"
-      },
-      "code_snippet": {
-        "file": "Magick++/fuzz/utils.cc",
-        "function": null,
-        "line": 6,
-        "before": "",
-        "after": "    Magick::ResourceLimits::width(2048);\n    Magick::ResourceLimits::height(2048);",
-        "fix_summary": "Magick++/fuzz/utils.cc：在 fuzz harness 设置资源上限（+2/-0 行）"
-      },
-      "description": "`MagickCore/image.c:3700`（`PushColormapIndex`）：TIM 解码把未初始化的索引交给了像素写入；上游没有改库代码，只在 `Magick++/fuzz/utils.cc` 的 FuzzingLimits 里把 image width/height 限制为 2048 像素，超限输入在读取阶段即失败。",
-      "patch": "patches/e8be814f1c3d267012d2f612b3366bfb5029414d.patch"
     },
     {
       "id": "42520871",
