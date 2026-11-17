@@ -1,12 +1,12 @@
 # 交付件清单
 
-核对日期：2026-11-16。此清单依据当前磁盘内容生成；项目根目录的版本管理元数据 `.git/` 不计入交付清单。`src/` 单独汇总（包含源码仓库自身的 Git 元数据），其余文件逐项记录字节数与 SHA256。
+核对日期：2026-11-16。此清单依据当前磁盘内容生成；项目根目录的版本管理元数据 `.git/` 不计入交付清单。`src/` 单独汇总（目录名带 `-readonly` 后缀表示只读；不含 Git 元数据，按普通文件随仓库提交），其余文件逐项记录字节数与 SHA256。
 
 ## 1. 当前交付内容
 
 | 项目 | 数量 | 字节数 |
 | --- | --- | --- |
-| 源码副本 `src/` | 2438 个文件 | 226160825 |
+| 源码副本 `src/imagemagick-readonly/` | 2415 个文件 | 51284306 |
 | 修复补丁 | 61 个文件 | 80558 |
 | PoC 输入 | 63 个文件 | 696868 |
 | 有效案例索引 | 63 条 | 见下方 cases.tsv |
@@ -146,8 +146,8 @@
 | `payload/pocs/42535688/poc` | 164 | `59d72c5bfe0d53814257e31b6ee6201571338b253418e8632000924afc66109e` |
 | `payload/pocs/42537011/poc` | 97 | `01215294ed857c185b370958fb78f21be3515bc125dde81fbdd824b50a119312` |
 | `payload/vulnerabilities.json` | 71520 | `ee117b4edb99c7d29f77cb595a7ea3cf25832604634cc12e248750819653b1ab` |
-| `README.md` | 16374 | `f56f2bf52cae7cef74fe826e4f85bc144e0536d930469cac506aa00bad5dbc14` |
-| `SPECIFICATION.md` | 9052 | `d77359dad4c08cf367b8e95af98f3958fb3229a0ae73b74b705739c7d49540d2` |
+| `README.md` | 16403 | `a746ce25694cbb251b9aada4187d0f06f0ace152367494d044c67b8d6f4a501f` |
+| `SPECIFICATION.md` | 9788 | `6a9815099aad6bbc8f7d90e6dd51d4d5f7551c18a682c3f0a07197d3a77d9d38` |
 | `reports/verify-one-by-one.json` | 8564 | `2d990e36b7f9a91b895dc0ee753afb35499514d4c1b20a175e7c125abef12273` |
 | `reports/verify-one.json` | 116 | `a545298ed997051b1ff1b34d6e8f8c1f2a6dbb5d0e0e9decb2abafe96d893e15` |
 | `reports/verify.json` | 4910 | `ac9a6bfe2adba6a58103445b93a175084901975593e65c468891c52726179506` |

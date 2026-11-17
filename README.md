@@ -11,7 +11,7 @@ imagemagick-vul/
 ├── README.md
 ├── MANIFEST.md
 ├── image/Dockerfile           镜像构建定义
-├── src/imagemagick/           本地源码副本
+├── src/imagemagick-readonly/  只读源码副本（纯源码，不含 .git）
 ├── payload/
 │   ├── cases.tsv              案例索引：63 条、8 列
 │   ├── vulnerabilities.json   漏洞信息、源码片段和补丁路径

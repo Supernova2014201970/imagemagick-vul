@@ -17,7 +17,7 @@
 ├── image/
 │   └── Dockerfile
 ├── src/
-│   └── <project>/
+│   └── <project>-readonly/
 ├── payload/
 │   ├── vulnerabilities.json
 │   ├── patches/
@@ -43,17 +43,21 @@
 | `README.md` | 必须，使用说明、环境条件和接口契约 |
 | `MANIFEST.md` | 必须，文件清单、大小和校验值 |
 | `image/Dockerfile` | 必须，定义可重建运行环境 |
-| `src/<project>/` | 必须，基线源码副本 |
+| `src/<project>-readonly/` | 必须，只读的基线源码副本 |
 | `payload/` | 必须，机器可读的案例、漏洞信息、PoC 和补丁 |
 | `scripts/` | 必须，构建与验证入口 |
 | `reports/` | 必须，发布前结果、日志及运行环境信息 |
 
+`payload/cases.tsv`（案例索引）与 `scripts/hand_repro.cc`（复现驱动）是本包针对 ImageMagick 的实现，**不属于通用要求**：其他漏洞仓按自身的构建与复现方式组织，可以没有这两个文件，也可以用别的形式承载同样的信息。
+
 
 ## 3. 基线源码格式
 
-`src/<project>/` 必须对应 `baseline.commit`，该字段使用完整提交 ID。
+`src/<project>-readonly/` 必须对应 `baseline.commit`，该字段使用完整提交 ID。
 
 - 必须包含构建所需源码、配置文件及必要资源。
+- 目录名以 `-readonly` 结尾，表示该副本只读：不得在其中构建、打补丁或修改文件。目录名是约定，不在文件系统上强制权限；需要构建或应用补丁时应复制出去再操作。
+- 该副本不含 `.git`，作为普通文件随仓库提交，不用子模块（gitlink）记录；基线身份由 `baseline.commit`、`describe` 和 MANIFEST 的 `src/` 统计确定。
 - 发布前必须保持基线工作区干净，不混入普通或插桩构建产物。
 - 本地源码与镜像中基线的已跟踪文件内容必须一致；
 - README、漏洞元数据和 Dockerfile 中的基线身份必须一致。
