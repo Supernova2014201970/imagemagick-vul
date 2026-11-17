@@ -173,22 +173,39 @@ README 必须包含“漏洞分布”章节，依据随包元数据与案例索�
 
 ## 8. 报告格式与退出码
 
-保留现有 `pass`、`fail`、`results` 字段，增加 `error` 数量和每条记录的 `status`。基线单案例示例：
+三份报告由脚本直接生成，顶层固定为 `pass`、`fail`、`results`，不设 `error` 计数，条目也不设 `status`。
+
+| 报告 | 生成者 | 条目字段 | `pass` / `fail` 的口径 |
+| --- | --- | --- | --- |
+| `verify.json` | `verify.sh` | `poc`、`pass`、`alert` | CLEAN 条数 / 其余条数 |
+| `verify-one.json` | `verify-one.sh` | `poc`、`pass`、`alert` | 该案例 CLEAN 时为 `1`/`0`，否则为 `0`/`1` |
+| `verify-one-by-one.json` | `verify-one-by-one.sh` | `poc`、`patch`、`pass`、`alert` | `pass` 为 true 的条数 / 其余条数 |
+
+`patch` 只记录补丁文件名（如 `9998cd71….patch`），不带 `patches/` 前缀。基线单案例示例：
 
 ```json
 {
   "pass": 0,
   "fail": 1,
-  "error": 0,
   "results": [
     {
       "poc": "42518438",
-      "status": "CRASH",
       "pass": false,
-      "alert": "Heap-buffer-overflow READ 1",
+      "alert": "Heap-buffer-overflow READ 1"
     }
   ]
 }
 ```
 
-补丁验证条目还必须保存 `patch`，统一使用相对 `payload/` 的完整路径。`
+输出位置：`--report DIR` 未指定时写入**相对当前工作目录**的 `reports/`，文件名固定为 `verify.json`、`verify-one.json`、`verify-one-by-one.json`，同名文件直接覆盖。容器的默认工作目录是 `/opt/imdt`，所以不加 `--report` 就会写进随包报告目录 `/opt/imdt/reports/`；要保留随包报告就显式指定目录，例如 `--report /tmp/baseline-report`。
+
+退出码：
+
+| 命令 | `0` | 非 `0` |
+| --- | --- | --- |
+| `verify.sh` | 没有任何案例返回 CLEAN（`clean=0`） | 至少一条 CLEAN |
+| `verify-one.sh <id>` | 该案例 CRASH（`pass=false`） | 该案例 CLEAN |
+| `verify-one.sh <id> --patched` | 该案例 CLEAN（`pass=true`） | 该案例仍 CRASH，或补丁无法应用 |
+| `verify-one-by-one.sh` | 全部 `pass=true`（`fail=0`） | 至少一条 `pass=false` |
+
+判据只有 `pass` 一个维度：`pass=true` 表示该 PoC 没有打崩被测源码树。运行本身失败的情形——子进程异常退出、内存分配失败、MSan 运行时启动崩溃在重试后仍无输出——同样记为 `pass=false`，因此基线报告的 `fail`/`crash` 计数包含这类运行失败，无法与真实崩溃区分。两个批量脚本不校验子进程退出码，缺失 `RESULT` 行也按 `pass=false` 计入。所以 `clean=0` 或 `fail=0` 带来的退出码成立，并不证明每条记录都产生了 sanitizer 报告；验收时必须同时核对案例数、运行日志和报告条数。

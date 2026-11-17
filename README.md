@@ -31,12 +31,14 @@ imagemagick-vul/
 docker pull n132/arvo:42518038-vul@sha256:fce885bd28185e1f08512fad0085714b32526187f7041fb7941965e8fd8de124
 docker build -f image/Dockerfile -t imagemagick-vul:13ffeab .
 docker run -dit --name imvul --security-opt seccomp=unconfined imagemagick-vul:13ffeab
-docker exec imvul /opt/imdt/build.sh
-docker exec imvul /opt/imdt/verify.sh --report /tmp/baseline-report
-docker exec imvul /opt/imdt/verify-one.sh 42518438 --report /tmp/one-before
-docker exec imvul /opt/imdt/verify-one.sh 42518438 --patched --report /tmp/one-after
-docker exec imvul /opt/imdt/verify-one-by-one.sh --report /tmp/patched-report
+docker exec imvul build.sh
+docker exec imvul verify.sh --report /tmp/baseline-report
+docker exec imvul verify-one.sh 42518438 --report /tmp/one-before
+docker exec imvul verify-one.sh 42518438 --patched --report /tmp/one-after
+docker exec imvul verify-one-by-one.sh --report /tmp/patched-report
 ```
+
+`/opt/imdt` 在镜像的 `PATH` 首位，脚本可以直接用名字调用；写成绝对路径 `/opt/imdt/build.sh` 效果相同。
 
 三个验证脚本都接受 `--tree DIR`，用于测试 `/src/imagemagick` 之外的另一份源码（默认取自 `$IMDT_TREE`，再默认 `/src/imagemagick`）；原始目录只读，`--patched` 只复制后再应用补丁。
 

@@ -146,8 +146,8 @@
 | `payload/pocs/42535688/poc` | 164 | `59d72c5bfe0d53814257e31b6ee6201571338b253418e8632000924afc66109e` |
 | `payload/pocs/42537011/poc` | 97 | `01215294ed857c185b370958fb78f21be3515bc125dde81fbdd824b50a119312` |
 | `payload/vulnerabilities.json` | 71520 | `ee117b4edb99c7d29f77cb595a7ea3cf25832604634cc12e248750819653b1ab` |
-| `README.md` | 16290 | `b59db4bc47de8a99c2afb06c29b7ddb9828ee06835f5ec5273e477a1b22f4669` |
-| `SPECIFICATION.md` | 7149 | `c10c41464ec57cc283c7c9670f4daa9697fc03005167fe50aa261fdc9fad3cee` |
+| `README.md` | 16374 | `f56f2bf52cae7cef74fe826e4f85bc144e0536d930469cac506aa00bad5dbc14` |
+| `SPECIFICATION.md` | 9052 | `d77359dad4c08cf367b8e95af98f3958fb3229a0ae73b74b705739c7d49540d2` |
 | `reports/verify-one-by-one.json` | 8564 | `2d990e36b7f9a91b895dc0ee753afb35499514d4c1b20a175e7c125abef12273` |
 | `reports/verify-one.json` | 116 | `a545298ed997051b1ff1b34d6e8f8c1f2a6dbb5d0e0e9decb2abafe96d893e15` |
 | `reports/verify.json` | 4910 | `ac9a6bfe2adba6a58103445b93a175084901975593e65c468891c52726179506` |
