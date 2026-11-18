@@ -98,12 +98,13 @@
   "location": {
     "file": "源码相对路径",
     "line": 100,
-    "function": "函数名"
+    "function": "函数名",
+    "stack": [
+      {"function": "函数名", "file": "源码相对路径"},
+      {"function": "调用者", "file": "源码相对路径"}
+    ]
   },
   "code_snippet": {
-    "file": "源码相对路径",
-    "function": "函数名",
-    "line": 100,
     "before": "基线代码片段",
     "after": "应用随包补丁后的代码片段",
     "fix_summary": "修复原理"
@@ -118,7 +119,10 @@
 - `id` 与 TSV 的 `localId` 必须一一对应，集合一致，不能重复或缺失。
 - `patch` 必须与 TSV 一致；补丁正文不重复内嵌到 JSON 中。
 - `before`、`after` 必须来自实际基线和应用随包补丁后的源码，不能仅按上游最新代码填写。
-- `location.line` 和 `code_snippet.line` 是各自片段在基线中的位置。
+- `location` 只记录崩溃报告位置（sanitizer 栈顶），`location.line` 是基线中的行号；`code_snippet` 只给 `before`、`after`、`fix_summary`，不重复携带 `file`/`function`/`line`。片段出处就是 `patch` 所指补丁中对应 hunk 的位置，可能与 `location` 不同（崩溃点落在头文件内联函数、修复在被调函数里就是这种情形），需要点明时写在 `description` 或 `fix_summary` 里。
+- `location.stack` 是同一份报告里的调用栈（sanitizer 的 `#N` 帧）：由内向外，只保留源码树内的业务代码帧——去掉 `LLVMFuzzerTestOneInput`、`main` 这类入口和 `*/fuzz/*`、`*_fuzzer.c`/`*_fuzzer.cc` 这类 fuzz 驱动文件，从第一个业务帧开始；路径按报告里的相对写法，最多 10 帧（截断时保留靠内一侧）。每帧只记 `function` 和 `file`，**不记行号**：行号会随修复漂移，而且同一函数里的不同分支在栈上没有区别。
+- `stack` 里必须有一帧的 `function`、`file` 与 `location` 相同（通常是首帧；首帧定位不到源码行时 `location` 取其后的第一个可定位帧，首帧仍原样留在栈里）。栈的用途是把「`location` 相同」的案例分开：位置相同不代表同一个问题，同一个头文件内联函数可以由不同解码器的不同调用路径走到。
+- 判断顺序：先看 `location.stack`；栈也完全相同的案例（同一函数里两处缺陷、或多条 PoC 走同一条调用链）以 `patch` 和 `description` 区分。栈只到函数/文件粒度，同一函数内的不同分支不会体现出来。未知时 `stack` 允许为 `null`。
 - 未知的 CWE、源码位置、函数和片段允许使用 `null`，不得猜测填充；其他必需字段必须有效。
 - `description` 必须区分源码缺陷修复、资源限制、测试驱动约束等不同修复方式。
 
@@ -147,6 +151,8 @@ PoC 保存为 `payload/pocs/<case_id>/poc`，
 - 普通编译与插桩编译必须使用独立产物，不得错误混用。
 - 补丁验证必须复制源码，不能修改原始基线；各案例补丁不累计。
 - 三个验证脚本必须能通过 `--tree DIR` 指向 `/src/<project>` 之外的源码目录，且不修改该目录。
+- 不设命令分发层：脚本本身就是接口，交付文档与示例一律直接写 `build.sh`、`verify.sh`、`verify-one.sh`、`verify-one-by-one.sh`，不引入 `build`/`verify`/`verify-one` 这类包装命令或二级子命令。
+- 脚本目录（本数据集为 `/opt/imdt`）必须加入 `PATH`，脚本带执行位，因此上表四条命令可直接按名调用，读者不需要拼全路径。
 
 参考调用关系：
 

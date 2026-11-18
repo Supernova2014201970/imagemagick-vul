@@ -23,12 +23,31 @@
       "location": {
         "file": "coders/sixel.c",
         "line": 462,
-        "function": "sixel_decode"
+        "function": "sixel_decode",
+        "stack": [
+          {
+            "function": "sixel_decode",
+            "file": "coders/sixel.c"
+          },
+          {
+            "function": "ReadSIXELImage",
+            "file": "coders/sixel.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/sixel.c",
-        "function": "sixel_decode",
-        "line": 462,
         "before": "            if (n > 0) {",
         "after": "            if ((n > 0) && (param[0] > 1)) {",
         "fix_summary": "sixel_decode：增加边界或长度校验（+1/-1 行）"
@@ -46,12 +65,51 @@
       "location": {
         "file": "MagickCore/quantize.c",
         "line": 3411,
-        "function": "SetGrayscaleImage"
+        "function": "SetGrayscaleImage",
+        "stack": [
+          {
+            "function": "SetGrayscaleImage",
+            "file": "MagickCore/quantize.c"
+          },
+          {
+            "function": "QuantizeImage",
+            "file": "MagickCore/quantize.c"
+          },
+          {
+            "function": "SetImageType",
+            "file": "MagickCore/attribute.c"
+          },
+          {
+            "function": "WriteSUNImage",
+            "file": "coders/sun.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "SetGrayscaleImage",
+            "file": "MagickCore/quantize.c"
+          },
+          {
+            "function": "QuantizeImage",
+            "file": "MagickCore/quantize.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/quantize.c",
-        "function": "SetGrayscaleImage",
-        "line": 3411,
         "before": "  colormap_index=(ssize_t *) AcquireQuantumMemory(MaxColormapSize,\n    sizeof(*colormap_index));",
         "after": "  if (image->storage_class == PseudoClass)\n    colormap_index=(ssize_t *) AcquireQuantumMemory(image->colors,\n      sizeof(*colormap_index));\n  else\n    colormap_index=(ssize_t *) AcquireQuantumMemory(MaxColormapSize,\n      sizeof(*colormap_index));",
         "fix_summary": "SetGrayscaleImage：增加边界或长度校验（+6/-2 行）"
@@ -69,12 +127,51 @@
       "location": {
         "file": "MagickCore/xml-tree.c",
         "line": 1525,
-        "function": "ParseEntities"
+        "function": "ParseEntities",
+        "stack": [
+          {
+            "function": "ParseEntities",
+            "file": "MagickCore/xml-tree.c"
+          },
+          {
+            "function": "ParseInternalDoctype",
+            "file": "MagickCore/xml-tree.c"
+          },
+          {
+            "function": "NewXMLTree",
+            "file": "MagickCore/xml-tree.c"
+          },
+          {
+            "function": "GetXMPProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "GetImageProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "SetImageProfileInternal",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "ReadPSImage",
+            "file": "coders/ps.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/xml-tree.c",
-        "function": "ParseEntities",
-        "line": 1525,
         "before": "                      p=(char *) ResizeQuantumMemory(p,extent,sizeof(*p));\n                        extent_xml=(char *) AcquireQuantumMemory(extent,\n                          {\n                            (void) CopyMagickString(extent_xml,p,extent*\n                              sizeof(*extent_xml));\n                            p= extent_xml;\n                          }",
         "after": "                      p=(char *) ResizeQuantumMemory(p,extent+1,sizeof(*p));\n                        extent_xml=(char *) AcquireQuantumMemory(extent+1,\n                          (void) CopyMagickString(extent_xml,p,extent*\n                            sizeof(*extent_xml));\n                        p=extent_xml;\n                    p[extent]='\\0';",
         "fix_summary": "ParseEntities：增加边界或长度校验（+7/-7 行）"
@@ -92,12 +189,31 @@
       "location": {
         "file": "coders/pes.c",
         "line": 624,
-        "function": "ReadPESImage"
+        "function": "ReadPESImage",
+        "stack": [
+          {
+            "function": "ReadPESImage",
+            "file": "coders/pes.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ReadPESImage",
+            "file": "coders/pes.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/pes.c",
-        "function": "ReadPESImage",
-        "line": 624,
         "before": "        if (j >= 256)\n            ThrowReaderException(ResourceLimitError,\"MemoryAllocationFailed\");",
         "after": "        if (j >= 255)\n            ThrowReaderException(ResourceLimitError,\"CorruptImage\");",
         "fix_summary": "ReadPESImage：增加边界或长度校验（+2/-2 行）"
@@ -115,12 +231,51 @@
       "location": {
         "file": "./MagickCore/pixel-accessor.h",
         "line": 844,
-        "function": "SetPixelRed"
+        "function": "SetPixelRed",
+        "stack": [
+          {
+            "function": "SetPixelRed",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "ReadDXT3Pixels",
+            "file": "coders/dds.c"
+          },
+          {
+            "function": "ReadDXT3",
+            "file": "coders/dds.c"
+          },
+          {
+            "function": "ReadDDSImage",
+            "file": "coders/dds.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "AcquireAlignedMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "OpenPixelCache",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "GetImagePixelCache",
+            "file": "MagickCore/cache.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/dds.c",
-        "function": "ReadDXT3Pixels",
-        "line": 2113,
         "before": "          if ((x + i) < (ssize_t) image->rows && (y + j) < (ssize_t) image->columns)",
         "after": "          if ((x + i) < (ssize_t) image->columns && (y + j) < (ssize_t) image->rows)",
         "fix_summary": "ReadDXT3Pixels：增加边界或长度校验（+1/-1 行）"
@@ -138,12 +293,51 @@
       "location": {
         "file": "MagickCore/xml-tree.c",
         "line": 1506,
-        "function": "ParseEntities"
+        "function": "ParseEntities",
+        "stack": [
+          {
+            "function": "ParseEntities",
+            "file": "MagickCore/xml-tree.c"
+          },
+          {
+            "function": "ParseCharacterContent",
+            "file": "MagickCore/xml-tree.c"
+          },
+          {
+            "function": "NewXMLTree",
+            "file": "MagickCore/xml-tree.c"
+          },
+          {
+            "function": "GetXMPProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "GetImageProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "SetImageProfileInternal",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "ReadPSImage",
+            "file": "coders/ps.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/xml-tree.c",
-        "function": "ParseEntities",
-        "line": 1506,
         "before": "",
         "after": "                            ResetMagickMemory(extent_xml,0,extent*\n                              sizeof(*extent_xml));",
         "fix_summary": "ParseEntities：补齐缓冲区初始化/清零（+2/-0 行）"
@@ -161,12 +355,35 @@
       "location": {
         "file": "MagickCore/memory.c",
         "line": 1156,
-        "function": "ResetMagickMemory"
+        "function": "ResetMagickMemory",
+        "stack": [
+          {
+            "function": "ResetMagickMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "sixel_decode",
+            "file": "coders/sixel.c"
+          },
+          {
+            "function": "ReadSIXELImage",
+            "file": "coders/sixel.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/sixel.c",
-        "function": "sixel_decode",
-        "line": 489,
         "before": "                                (void) ResetMagickMemory(imbuf + (size_t) imsx * y + posision_x, color_index, repeat_count);",
         "after": "                                offset=(size_t) imsx * y + posision_x;\n                                if (offset + repeat_count >= (size_t) imsx * imsy)\n                                  {\n                                    imbuf = (unsigned char *) RelinquishMagickMemory(imbuf);\n                                    return (MagickFalse);\n                                  }\n                                (void) ResetMagickMemory(imbuf + offset, color_index, repeat_count);",
         "fix_summary": "sixel_decode：增加边界或长度校验（+15/-2 行）"
@@ -184,12 +401,51 @@
       "location": {
         "file": "./MagickCore/pixel-accessor.h",
         "line": 522,
-        "function": "IsPixelGray"
+        "function": "IsPixelGray",
+        "stack": [
+          {
+            "function": "IsPixelGray",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "IdentifyImageGray",
+            "file": "MagickCore/attribute.c"
+          },
+          {
+            "function": "SetImageGray",
+            "file": "MagickCore/colorspace.c"
+          },
+          {
+            "function": "ReadDCMImage",
+            "file": "coders/dcm.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "AcquireAlignedMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "OpenPixelCache",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "GetImagePixelCache",
+            "file": "MagickCore/cache.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/dcm.c",
-        "function": "ReadDCMImage",
-        "line": 3927,
         "before": "",
         "after": "    (void) SetImageBackgroundColor(image,exception);",
         "fix_summary": "ReadDCMImage：补齐缓冲区初始化/清零（+1/-0 行）"
@@ -207,12 +463,31 @@
       "location": {
         "file": "coders/pdb.c",
         "line": 349,
-        "function": "ReadPDBImage"
+        "function": "ReadPDBImage",
+        "stack": [
+          {
+            "function": "ReadPDBImage",
+            "file": "coders/pdb.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ReadPDBImage",
+            "file": "coders/pdb.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/pdb.c",
-        "function": "ReadPDBImage",
-        "line": 349,
         "before": "",
         "after": "  (void) ResetMagickMemory(&pdb_info,0,sizeof(pdb_info));",
         "fix_summary": "ReadPDBImage：补齐缓冲区初始化/清零（+1/-0 行）"
@@ -230,12 +505,51 @@
       "location": {
         "file": "./MagickCore/quantum.h",
         "line": 116,
-        "function": "ScaleQuantumToChar"
+        "function": "ScaleQuantumToChar",
+        "stack": [
+          {
+            "function": "ScaleQuantumToChar",
+            "file": "./MagickCore/quantum.h"
+          },
+          {
+            "function": "ConcatentateHexColorComponent",
+            "file": "MagickCore/color.c"
+          },
+          {
+            "function": "GetColorTuple",
+            "file": "MagickCore/color.c"
+          },
+          {
+            "function": "WriteTXTImage",
+            "file": "coders/txt.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "GetPixelInfoPixel",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "WriteTXTImage",
+            "file": "coders/txt.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/txt.c",
-        "function": "ReadTXTImage",
-        "line": 464,
         "before": "    (void) SetImageBackgroundColor(image,exception);",
         "after": "    (void) SetImageBackgroundColor(image,exception);",
         "fix_summary": "ReadTXTImage：补齐缓冲区初始化/清零（+1/-1 行）"
@@ -253,12 +567,51 @@
       "location": {
         "file": "./MagickCore/pixel-accessor.h",
         "line": 783,
-        "function": "SetPixelViaPixelInfo"
+        "function": "SetPixelViaPixelInfo",
+        "stack": [
+          {
+            "function": "SetPixelViaPixelInfo",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "InsertRow",
+            "file": "coders/wpg.c"
+          },
+          {
+            "function": "ReadWPGImage",
+            "file": "coders/wpg.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "AcquireQuantumMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "ReadWPGImage",
+            "file": "coders/wpg.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/wpg.c",
-        "function": "ReadWPGImage",
-        "line": 1391,
         "before": "                      (void) ReadBlob(image,ldblk,BImgBuff);",
         "after": "                      ssize_t\n                        count;\n\n                      count=ReadBlob(image,(size_t) ldblk,BImgBuff);\n                      if (count != ldblk)\n                        break;",
         "fix_summary": "ReadWPGImage：调整相关实现（+6/-1 行）"
@@ -276,12 +629,51 @@
       "location": {
         "file": "./MagickCore/pixel-accessor.h",
         "line": 567,
-        "function": "IsPixelMonochrome"
+        "function": "IsPixelMonochrome",
+        "stack": [
+          {
+            "function": "IsPixelMonochrome",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "IdentifyImageMonochrome",
+            "file": "MagickCore/attribute.c"
+          },
+          {
+            "function": "SetImageMonochrome",
+            "file": "MagickCore/colorspace.c"
+          },
+          {
+            "function": "WritePCXImage",
+            "file": "coders/pcx.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImageToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "SetPixelViaPixelInfo",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "SyncImage",
+            "file": "MagickCore/image.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/pcx.c",
-        "function": "ReadPCXImage",
-        "line": 385,
         "before": "",
         "after": "    (void) SetImageBackgroundColor(image,exception);",
         "fix_summary": "ReadPCXImage：补齐缓冲区初始化/清零（+1/-0 行）"
@@ -299,12 +691,39 @@
       "location": {
         "file": "MagickCore/token.c",
         "line": 313,
-        "function": "GetNextToken"
+        "function": "GetNextToken",
+        "stack": [
+          {
+            "function": "GetNextToken",
+            "file": "MagickCore/token.c"
+          },
+          {
+            "function": "DrawImage",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "ReadMVGImage",
+            "file": "coders/mvg.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "DrawImage",
+            "file": "MagickCore/draw.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/token.c",
-        "function": "GetNextToken",
-        "line": 313,
         "before": "  if ((LocaleNCompare(token,\"url(\",4) == 0) && (strlen(token) > 4))",
         "after": "  if ((LocaleNCompare(token,\"url(\",4) == 0) && (strlen(token) > 5))",
         "fix_summary": "GetNextToken：增加边界或长度校验（+1/-1 行）"
@@ -322,12 +741,51 @@
       "location": {
         "file": "MagickCore/draw.c",
         "line": 3948,
-        "function": "GetFillAlpha"
+        "function": "GetFillAlpha",
+        "stack": [
+          {
+            "function": "GetFillAlpha",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawPolygonPrimitive",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawPrimitive",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawImage",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "ReadMVGImage",
+            "file": "coders/mvg.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "AcquireQuantumMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "ConvertPathToPolygon",
+            "file": "MagickCore/draw.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/draw.c",
-        "function": "GetFillAlpha",
-        "line": 3948,
         "before": "    for ( ; i < (ssize_t) p->number_points; i++)",
         "after": "    for ( ; i < (ssize_t) (p->number_points-1); i++)",
         "fix_summary": "GetFillAlpha：调整相关实现（+1/-1 行）"
@@ -345,12 +803,51 @@
       "location": {
         "file": "./MagickCore/colormap-private.h",
         "line": 32,
-        "function": "ConstrainColormapIndex"
+        "function": "ConstrainColormapIndex",
+        "stack": [
+          {
+            "function": "ConstrainColormapIndex",
+            "file": "./MagickCore/colormap-private.h"
+          },
+          {
+            "function": "ReadPICTImage",
+            "file": "coders/pict.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "CopyMagickMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "DecodeImage",
+            "file": "coders/pict.c"
+          },
+          {
+            "function": "ReadPICTImage",
+            "file": "coders/pict.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/pict.c",
-        "function": "DecodeImage",
-        "line": 459,
         "before": "",
         "after": "  (void) ResetMagickMemory(scanline,0,2*row_bytes*sizeof(*scanline));",
         "fix_summary": "DecodeImage：补齐缓冲区初始化/清零（+1/-0 行）"
@@ -368,12 +865,51 @@
       "location": {
         "file": "MagickCore/pixel.c",
         "line": 6132,
-        "function": "IsFuzzyEquivalencePixelInfo"
+        "function": "IsFuzzyEquivalencePixelInfo",
+        "stack": [
+          {
+            "function": "IsFuzzyEquivalencePixelInfo",
+            "file": "MagickCore/pixel.c"
+          },
+          {
+            "function": "TransparentPaintImage",
+            "file": "MagickCore/paint.c"
+          },
+          {
+            "function": "ReadPALMImage",
+            "file": "coders/palm.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "GetPixelInfoPixel",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "TransparentPaintImage",
+            "file": "MagickCore/paint.c"
+          },
+          {
+            "function": "ReadPALMImage",
+            "file": "coders/palm.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/palm.c",
-        "function": "ReadPALMImage",
-        "line": 314,
         "before": "",
         "after": "    (void) SetImageBackgroundColor(image,exception);",
         "fix_summary": "ReadPALMImage：补齐缓冲区初始化/清零（+1/-0 行）"
@@ -391,12 +927,51 @@
       "location": {
         "file": "./MagickCore/quantum.h",
         "line": 116,
-        "function": "ScaleQuantumToChar"
+        "function": "ScaleQuantumToChar",
+        "stack": [
+          {
+            "function": "ScaleQuantumToChar",
+            "file": "./MagickCore/quantum.h"
+          },
+          {
+            "function": "ColorToNodeId",
+            "file": "MagickCore/histogram.c"
+          },
+          {
+            "function": "ClassifyImageColors",
+            "file": "MagickCore/histogram.c"
+          },
+          {
+            "function": "GetNumberColors",
+            "file": "MagickCore/histogram.c"
+          },
+          {
+            "function": "WritePALMImage",
+            "file": "coders/palm.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "GetPixelInfoPixel",
+            "file": "./MagickCore/pixel-accessor.h"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/palm.c",
-        "function": "ReadPALMImage",
-        "line": 406,
         "before": "    one_row=(unsigned char *) AcquireQuantumMemory(MagickMax(bytes_per_row,\n      2*image->columns),sizeof(*one_row));",
         "after": "    extent=MagickMax(bytes_per_row,2*image->columns);\n    one_row=(unsigned char *) AcquireQuantumMemory(extent,sizeof(*one_row));\n    (void) ResetMagickMemory(one_row,0,extent*sizeof(*one_row));",
         "fix_summary": "ReadPALMImage：调整相关实现（+5/-3 行）"
@@ -414,12 +989,51 @@
       "location": {
         "file": "./MagickCore/pixel-accessor.h",
         "line": 487,
-        "function": "IsPixelEquivalent"
+        "function": "IsPixelEquivalent",
+        "stack": [
+          {
+            "function": "IsPixelEquivalent",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "ClassifyImageColors",
+            "file": "MagickCore/quantize.c"
+          },
+          {
+            "function": "QuantizeImage",
+            "file": "MagickCore/quantize.c"
+          },
+          {
+            "function": "SetImageType",
+            "file": "MagickCore/attribute.c"
+          },
+          {
+            "function": "WritePNMImage",
+            "file": "coders/pnm.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "GetPixelInfoPixel",
+            "file": "./MagickCore/pixel-accessor.h"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/pnm.c",
-        "function": "ReadPNMImage",
-        "line": 428,
         "before": "",
         "after": "    (void) SetImageBackgroundColor(image,exception);",
         "fix_summary": "ReadPNMImage：补齐缓冲区初始化/清零（+1/-0 行）"
@@ -437,12 +1051,51 @@
       "location": {
         "file": "./MagickCore/quantum-private.h",
         "line": 504,
-        "function": "ScaleQuantumToShort"
+        "function": "ScaleQuantumToShort",
+        "stack": [
+          {
+            "function": "ScaleQuantumToShort",
+            "file": "./MagickCore/quantum-private.h"
+          },
+          {
+            "function": "ExportGrayQuantum",
+            "file": "MagickCore/quantum-export.c"
+          },
+          {
+            "function": "ExportQuantumPixels",
+            "file": "MagickCore/quantum-export.c"
+          },
+          {
+            "function": "WriteDPXImage",
+            "file": "coders/dpx.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImageToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ClonePixelCacheRepository",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "OpenPixelCache",
+            "file": "MagickCore/cache.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/dpx.c",
-        "function": "ReadDPXImage",
-        "line": 1134,
         "before": "",
         "after": "  (void) SetImageBackgroundColor(image,exception);",
         "fix_summary": "ReadDPXImage：补齐缓冲区初始化/清零（+1/-0 行）"
@@ -460,12 +1113,51 @@
       "location": {
         "file": "./MagickCore/pixel-accessor.h",
         "line": 522,
-        "function": "IsPixelGray"
+        "function": "IsPixelGray",
+        "stack": [
+          {
+            "function": "IsPixelGray",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "IdentifyImageGray",
+            "file": "MagickCore/attribute.c"
+          },
+          {
+            "function": "SetImageGray",
+            "file": "MagickCore/colorspace.c"
+          },
+          {
+            "function": "WriteMATImage",
+            "file": "coders/mat.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "SetPixelGreen",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "TransformsRGBImage",
+            "file": "MagickCore/colorspace.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/mat.c",
-        "function": "ReadMATImageV4",
-        "line": 697,
         "before": "",
         "after": "    (void) SetImageBackgroundColor(image,exception);",
         "fix_summary": "ReadMATImageV4：补齐缓冲区初始化/清零（+2/-0 行）"
@@ -483,12 +1175,51 @@
       "location": {
         "file": "MagickCore/memory.c",
         "line": 726,
-        "function": "CopyMagickMemory"
+        "function": "CopyMagickMemory",
+        "stack": [
+          {
+            "function": "CopyMagickMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "RemoveResolutionFromResourceBlock",
+            "file": "coders/psd.c"
+          },
+          {
+            "function": "WritePSDImage",
+            "file": "coders/psd.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "AcquireStringInfo",
+            "file": "MagickCore/string.c"
+          },
+          {
+            "function": "CloneStringInfo",
+            "file": "MagickCore/string.c"
+          },
+          {
+            "function": "WritePSDImage",
+            "file": "coders/psd.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/psd.c",
-        "function": "RemoveResolutionFromResourceBlock",
-        "line": 3046,
         "before": "    if ((id == 0x000003ed) && (cnt < (ssize_t) (length-12)))",
         "after": "    if ((id == 0x000003ed) && (cnt < (ssize_t) (length-12)) &&\n        ((ssize_t) length-(cnt+12)-(q-datum)) > 0)",
         "fix_summary": "RemoveResolutionFromResourceBlock：增加边界或长度校验（+2/-1 行）"
@@ -506,12 +1237,43 @@
       "location": {
         "file": "MagickCore/cache.c",
         "line": 3954,
-        "function": "QueueAuthenticPixelCacheNexus"
+        "function": "QueueAuthenticPixelCacheNexus",
+        "stack": [
+          {
+            "function": "QueueAuthenticPixelCacheNexus",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "GetAuthenticPixelCacheNexus",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "GetAuthenticPixels",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "ReadTXTImage",
+            "file": "coders/txt.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ReadTXTImage",
+            "file": "coders/txt.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/txt.c",
-        "function": "ReadTXTImage",
-        "line": 437,
         "before": "",
         "after": "  x_offset=(-1);\n  y_offset=(-1);",
         "fix_summary": "ReadTXTImage：调整相关实现（+2/-0 行）"
@@ -529,12 +1291,51 @@
       "location": {
         "file": "MagickCore/locale.c",
         "line": 1518,
-        "function": "LocaleNCompare"
+        "function": "LocaleNCompare",
+        "stack": [
+          {
+            "function": "LocaleNCompare",
+            "file": "MagickCore/locale.c"
+          },
+          {
+            "function": "GetProfilesFromResourceBlock",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "SetImageProfileInternal",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "ReadMIFFImage",
+            "file": "coders/miff.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ResizeMagickMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "ResizeQuantumMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "BlobToStringInfo",
+            "file": "MagickCore/string.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/miff.c",
-        "function": "PushRunlengthPacket",
-        "line": 194,
         "before": "      pixel->index=0;\n          pixel->index=ConstrainColormapIndex(image,((size_t) *p << 24) |\n            ((size_t) *(p+1) << 16) | ((size_t) *(p+2) << 8) | (size_t) *(p+3),\n            exception);\n          pixel->index=ConstrainColormapIndex(image,(*p << 8) | *(p+1),\n            exception);\n          pixel->index=ConstrainColormapIndex(image,*p,exception);",
         "after": "      pixel->index=0.0;\n          pixel->index=(MagickRealType) ConstrainColormapIndex(image,(ssize_t)\n            (((size_t) *p << 24) | ((size_t) *(p+1) << 16) |\n            ((size_t) *(p+2) << 8) | (size_t) *(p+3)),exception);\n          pixel->index=(MagickRealType) ConstrainColormapIndex(image,(ssize_t)\n            ((*p << 8) | *(p+1)),exception);\n          pixel->index=(MagickRealType) ConstrainColormapIndex(image,\n            (ssize_t) *p,exception);",
         "fix_summary": "PushRunlengthPacket：调整相关实现（+71/-46 行）"
@@ -552,12 +1353,51 @@
       "location": {
         "file": "MagickCore/draw.c",
         "line": 1666,
-        "function": "TracePoint"
+        "function": "TracePoint",
+        "stack": [
+          {
+            "function": "TracePoint",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "TraceEllipse",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawImage",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "ReadMVGImage",
+            "file": "coders/mvg.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ResizeMagickMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "DrawImage",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "ReadMVGImage",
+            "file": "coders/mvg.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/draw.c",
-        "function": "TracePoint",
-        "line": 1666,
         "before": "        radius=hypot((double) alpha,(double) beta);\n        points_extent=2*ceil((double) MagickPI*radius)+6*BezierQuantum+360;",
         "after": "        radius=hypot(alpha,beta);\n        points_extent=ceil(MagickPI*MagickPI*radius)+6*BezierQuantum+360;",
         "fix_summary": "DrawImage 把容量系数由 2π 改为 π²，容量 22.3 万→34.6 万，覆盖该 PoC 的 32.2 万点。"
@@ -575,12 +1415,51 @@
       "location": {
         "file": "./MagickCore/pixel-accessor.h",
         "line": 37,
-        "function": "ClampPixel"
+        "function": "ClampPixel",
+        "stack": [
+          {
+            "function": "ClampPixel",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "CompositeImage",
+            "file": "MagickCore/composite.c"
+          },
+          {
+            "function": "load_level",
+            "file": "coders/xcf.c"
+          },
+          {
+            "function": "load_hierarchy",
+            "file": "coders/xcf.c"
+          },
+          {
+            "function": "ReadOneLayer",
+            "file": "coders/xcf.c"
+          },
+          {
+            "function": "ReadXCFImage",
+            "file": "coders/xcf.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "AcquireAlignedMemory",
+            "file": "MagickCore/memory.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/xcf.c",
-        "function": "load_level",
-        "line": 669,
         "before": "",
         "after": "      (void) SetImageBackgroundColor(tile_image,exception);",
         "fix_summary": "load_level：补齐缓冲区初始化/清零（+1/-0 行）"
@@ -598,12 +1477,51 @@
       "location": {
         "file": "MagickCore/property.c",
         "line": 1750,
-        "function": "GetXMPProperty"
+        "function": "GetXMPProperty",
+        "stack": [
+          {
+            "function": "GetXMPProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "GetImageProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "SetImageProfileInternal",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "ReadMIFFImage",
+            "file": "coders/miff.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "StringInfoToString",
+            "file": "MagickCore/string.c"
+          },
+          {
+            "function": "GetXMPProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "GetImageProperty",
+            "file": "MagickCore/property.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/property.c",
-        "function": "GetXMPProperty",
-        "line": 1750,
         "before": "",
         "after": "  if (GetStringInfoLength(profile) < 17)\n    return(MagickFalse);",
         "fix_summary": "GetXMPProperty：调整相关实现（+2/-0 行）"
@@ -621,12 +1539,51 @@
       "location": {
         "file": "MagickCore/xml-tree.c",
         "line": 1722,
-        "function": "ParseInternalDoctype"
+        "function": "ParseInternalDoctype",
+        "stack": [
+          {
+            "function": "ParseInternalDoctype",
+            "file": "MagickCore/xml-tree.c"
+          },
+          {
+            "function": "NewXMLTree",
+            "file": "MagickCore/xml-tree.c"
+          },
+          {
+            "function": "GetXMPProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "GetImageProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "SetImageProfileInternal",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "ReadPSImage",
+            "file": "coders/ps.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ConvertUTF16ToUTF8",
+            "file": "MagickCore/xml-tree.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/property.c",
-        "function": "GetXMPProperty",
-        "line": 1747,
         "before": "",
         "after": "  if ((strstr(xmp_profile,\"<rdf:RDF\") == (char *) NULL) ||\n      (strstr(xmp_profile,\"<rdf:Description\") == (char *) NULL) ||\n      (strstr(xmp_profile,\"<x:\") == (char *) NULL))\n    {\n      xmp_profile=DestroyString(xmp_profile);\n      return(MagickFalse);\n    }",
         "fix_summary": "GetXMPProperty：增加边界或长度校验（+9/-1 行）"
@@ -644,12 +1601,51 @@
       "location": {
         "file": "MagickCore/property.c",
         "line": 1336,
-        "function": "GetEXIFProperty"
+        "function": "GetEXIFProperty",
+        "stack": [
+          {
+            "function": "GetEXIFProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "GetImageProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "SetImageProfileInternal",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "ReadMIFFImage",
+            "file": "coders/miff.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "CloneStringInfo",
+            "file": "MagickCore/string.c"
+          },
+          {
+            "function": "SetImageProfileInternal",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "ReadMIFFImage",
+            "file": "coders/miff.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/miff.c",
-        "function": "ReadMIFFImage",
-        "line": 901,
         "before": "                    (void) SetImageProfile(image,keyword+8,profile,exception);",
         "after": "                    if (EOFBlob(image) == MagickFalse)\n                      (void) SetImageProfile(image,keyword+8,profile,\n                        exception);",
         "fix_summary": "ReadMIFFImage：调整相关实现（+6/-2 行）"
@@ -667,12 +1663,51 @@
       "location": {
         "file": "MagickCore/locale.c",
         "line": 1518,
-        "function": "LocaleNCompare"
+        "function": "LocaleNCompare",
+        "stack": [
+          {
+            "function": "LocaleNCompare",
+            "file": "MagickCore/locale.c"
+          },
+          {
+            "function": "GetProfilesFromResourceBlock",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "SetImageProfileInternal",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "ReadMIFFImage",
+            "file": "coders/miff.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ResizeMagickMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "ResizeQuantumMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "BlobToStringInfo",
+            "file": "MagickCore/string.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/miff.c",
-        "function": "ReadMIFFImage",
-        "line": 901,
         "before": "                    (void) SetImageProfile(image,keyword+8,profile,exception);",
         "after": "                    if (EOFBlob(image) == MagickFalse)\n                      (void) SetImageProfile(image,keyword+8,profile,\n                        exception);",
         "fix_summary": "ReadMIFFImage：调整相关实现（+6/-2 行）"
@@ -690,12 +1725,39 @@
       "location": {
         "file": "MagickCore/blob.c",
         "line": 5436,
-        "function": "WriteBlob"
+        "function": "WriteBlob",
+        "stack": [
+          {
+            "function": "WriteBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "WriteHDRImage",
+            "file": "coders/hdr.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "WriteHDRImage",
+            "file": "coders/hdr.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/hdr.c",
-        "function": "WriteHDRImage",
-        "line": 711,
         "before": "      count=FormatLocaleString(header,MagickPathExtent,\"#%s\\n\",property);",
         "after": "      count=FormatLocaleString(header,MagickPathExtent,\"#%.*s\\n\",\n        MagickPathExtent-3,property);",
         "fix_summary": "WriteHDRImage：增加边界或长度校验（+2/-1 行）"
@@ -713,12 +1775,51 @@
       "location": {
         "file": "./MagickCore/quantum.h",
         "line": 116,
-        "function": "ScaleQuantumToChar"
+        "function": "ScaleQuantumToChar",
+        "stack": [
+          {
+            "function": "ScaleQuantumToChar",
+            "file": "./MagickCore/quantum.h"
+          },
+          {
+            "function": "WriteVIFFImage",
+            "file": "coders/viff.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "AcquireAlignedMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "OpenPixelCache",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "GetImagePixelCache",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "SyncImagePixelCache",
+            "file": "MagickCore/cache.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/viff.c",
-        "function": "ReadVIFFImage",
-        "line": 329,
         "before": "",
         "after": "    image->alpha_trait=viff_info.number_data_bands == 4 ? BlendPixelTrait :\n      UndefinedPixelTrait;\n    status=SetImageExtent(image,image->columns,image->rows,exception);\n    if (status == MagickFalse)\n      return(DestroyImageList(image));\n    (void) SetImageBackgroundColor(image,exception);",
         "fix_summary": "ReadVIFFImage：调整相关实现（+29/-31 行）"
@@ -736,12 +1837,51 @@
       "location": {
         "file": "MagickCore/profile.c",
         "line": 1859,
-        "function": "Sync8BimProfile"
+        "function": "Sync8BimProfile",
+        "stack": [
+          {
+            "function": "Sync8BimProfile",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "SyncImageProfiles",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "CloneStringInfo",
+            "file": "MagickCore/string.c"
+          },
+          {
+            "function": "CloneSplayTree",
+            "file": "MagickCore/splay-tree.c"
+          },
+          {
+            "function": "CloneImageProfiles",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "ReadGIFImage",
+            "file": "coders/gif.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/profile.c",
-        "function": "Sync8BimProfile",
-        "line": 1859,
         "before": "    if ((count > (ssize_t) length) || (count < 0))",
         "after": "    if ((count >= (ssize_t) length) || (count < 0))",
         "fix_summary": "Sync8BimProfile：调整相关实现（+1/-1 行）"
@@ -759,12 +1899,51 @@
       "location": {
         "file": "MagickCore/xml-tree.c",
         "line": 1722,
-        "function": "ParseInternalDoctype"
+        "function": "ParseInternalDoctype",
+        "stack": [
+          {
+            "function": "ParseInternalDoctype",
+            "file": "MagickCore/xml-tree.c"
+          },
+          {
+            "function": "NewXMLTree",
+            "file": "MagickCore/xml-tree.c"
+          },
+          {
+            "function": "GetXMPProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "GetImageProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "SetImageProfileInternal",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "ReadPSImage",
+            "file": "coders/ps.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ConvertUTF16ToUTF8",
+            "file": "MagickCore/xml-tree.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/xml-tree.c",
-        "function": "ParseInternalDoctype",
-        "line": 1722,
         "before": "    if (strncmp(xml,\"<!ENTITY\",8) == 0)",
         "after": "    if ((strlen(xml) > 9) && (strncmp(xml,\"<!ENTITY\",8) == 0))",
         "fix_summary": "ParseInternalDoctype：增加边界或长度校验（+1/-1 行）"
@@ -782,12 +1961,51 @@
       "location": {
         "file": "MagickCore/xml-tree.c",
         "line": 2288,
-        "function": "NewXMLTree"
+        "function": "NewXMLTree",
+        "stack": [
+          {
+            "function": "NewXMLTree",
+            "file": "MagickCore/xml-tree.c"
+          },
+          {
+            "function": "GetXMPProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "GetImageProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "SetImageProfileInternal",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "ReadPSImage",
+            "file": "coders/ps.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ConvertUTF16ToUTF8",
+            "file": "MagickCore/xml-tree.c"
+          },
+          {
+            "function": "NewXMLTree",
+            "file": "MagickCore/xml-tree.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/ps.c",
-        "function": "ReadPSImage",
-        "line": 1009,
         "before": "",
         "after": "  if (profiles != (LinkedListInfo *) NULL)\n    {\n      const char\n        *name;\n\n      const StringInfo\n...\n            (void) count;\n          }\n        name=(const char *) GetNextValueInLinkedList(profiles);\n      }\n      profiles=DestroyLinkedList(profiles,RelinquishMagickMemory);\n    }",
         "fix_summary": "ReadPSImage：增加边界或长度校验（+57/-7 行）"
@@ -805,12 +2023,51 @@
       "location": {
         "file": "./MagickCore/quantum.h",
         "line": 116,
-        "function": "ScaleQuantumToChar"
+        "function": "ScaleQuantumToChar",
+        "stack": [
+          {
+            "function": "ScaleQuantumToChar",
+            "file": "./MagickCore/quantum.h"
+          },
+          {
+            "function": "WritePICTImage",
+            "file": "coders/pict.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImageToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ClonePixelCacheRepository",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "OpenPixelCache",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "GetImagePixelCache",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "SyncImagePixelCache",
+            "file": "MagickCore/cache.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/pict.c",
-        "function": "ReadPICTImage",
-        "line": 927,
         "before": "",
         "after": "  image->alpha_trait=BlendPixelTrait;\n  (void) SetImageBackgroundColor(image,exception);",
         "fix_summary": "ReadPICTImage：补齐缓冲区初始化/清零（+2/-0 行）"
@@ -828,12 +2085,51 @@
       "location": {
         "file": "MagickCore/profile.c",
         "line": 1844,
-        "function": "Sync8BimProfile"
+        "function": "Sync8BimProfile",
+        "stack": [
+          {
+            "function": "Sync8BimProfile",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "SyncImageProfiles",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "CloneStringInfo",
+            "file": "MagickCore/string.c"
+          },
+          {
+            "function": "CloneSplayTree",
+            "file": "MagickCore/splay-tree.c"
+          },
+          {
+            "function": "CloneImageProfiles",
+            "file": "MagickCore/profile.c"
+          },
+          {
+            "function": "ReadGIFImage",
+            "file": "coders/gif.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/string.c",
-        "function": "AcquireStringInfo",
-        "line": 182,
         "before": "",
         "after": "  (void) memset(string_info->datum,0,length+MagickPathExtent);",
         "fix_summary": "AcquireStringInfo：补齐缓冲区初始化/清零（+7/-5 行）"
@@ -851,12 +2147,39 @@
       "location": {
         "file": "MagickCore/color.c",
         "line": 2385,
-        "function": "QueryColorCompliance"
+        "function": "QueryColorCompliance",
+        "stack": [
+          {
+            "function": "QueryColorCompliance",
+            "file": "MagickCore/color.c"
+          },
+          {
+            "function": "SetImageProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "ReadMIFFImage",
+            "file": "coders/miff.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "QueryColorCompliance",
+            "file": "MagickCore/color.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/color.c",
-        "function": "QueryColorCompliance",
-        "line": 2385,
         "before": "        colorspace[MagickPathExtent];",
         "after": "        colorspace[MagickPathExtent+1];",
         "fix_summary": "QueryColorCompliance：补齐缓冲区初始化/清零（+2/-1 行）"
@@ -874,12 +2197,39 @@
       "location": {
         "file": "MagickCore/color.c",
         "line": 2385,
-        "function": "QueryColorCompliance"
+        "function": "QueryColorCompliance",
+        "stack": [
+          {
+            "function": "QueryColorCompliance",
+            "file": "MagickCore/color.c"
+          },
+          {
+            "function": "SetImageProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "ReadMIFFImage",
+            "file": "coders/miff.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "OpenBlob",
+            "file": "MagickCore/blob.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/color.c",
-        "function": "QueryColorCompliance",
-        "line": 2385,
         "before": "        colorspace[MagickPathExtent];",
         "after": "        colorspace[2*MagickPathExtent];",
         "fix_summary": "QueryColorCompliance：补齐缓冲区初始化/清零（+2/-1 行）"
@@ -897,12 +2247,51 @@
       "location": {
         "file": "./MagickCore/quantum.h",
         "line": 116,
-        "function": "ScaleQuantumToChar"
+        "function": "ScaleQuantumToChar",
+        "stack": [
+          {
+            "function": "ScaleQuantumToChar",
+            "file": "./MagickCore/quantum.h"
+          },
+          {
+            "function": "WritePCXImage",
+            "file": "coders/pcx.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImageToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "SetPixelRed",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "ReadPCXImage",
+            "file": "coders/pcx.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/pcx.c",
-        "function": "ReadPCXImage",
-        "line": 418,
         "before": "",
         "after": "    (void) ResetMagickMemory(scanline,0,(size_t) MagickMax(image->columns,\n      pcx_info.bytes_per_line)*MagickMax(8,pcx_info.planes)*sizeof(*scanline));",
         "fix_summary": "ReadPCXImage：补齐缓冲区初始化/清零（+2/-0 行）"
@@ -920,12 +2309,51 @@
       "location": {
         "file": "./MagickCore/quantum.h",
         "line": 116,
-        "function": "ScaleQuantumToChar"
+        "function": "ScaleQuantumToChar",
+        "stack": [
+          {
+            "function": "ScaleQuantumToChar",
+            "file": "./MagickCore/quantum.h"
+          },
+          {
+            "function": "WriteSUNImage",
+            "file": "coders/sun.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "SetPixelBlue",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "ReadSUNImage",
+            "file": "coders/sun.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/sun.c",
-        "function": "ReadSUNImage",
-        "line": 478,
         "before": "    ResetMagickMemory(sun_pixels,0,pixels_length*sizeof(*sun_pixels));",
         "after": "    (void) ResetMagickMemory(sun_pixels,0,(pixels_length+image->rows)*\n      sizeof(*sun_pixels));",
         "fix_summary": "ReadSUNImage：补齐缓冲区初始化/清零（+2/-1 行）"
@@ -943,12 +2371,51 @@
       "location": {
         "file": "coders/miff.c",
         "line": 2147,
-        "function": "WriteMIFFImage"
+        "function": "WriteMIFFImage",
+        "stack": [
+          {
+            "function": "WriteMIFFImage",
+            "file": "coders/miff.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "SetImageProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "ReadMIFFImage",
+            "file": "coders/miff.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/property.c",
-        "function": "SetImageProperty",
-        "line": 4165,
         "before": "          image->resolution.x=geometry_info.rho;\n          image->resolution.y=geometry_info.sigma;\n          if ((flags & SigmaValue) == 0)\n            image->resolution.y=image->resolution.x;",
         "after": "          if ((flags & RhoValue) != 0)\n            image->resolution.x=geometry_info.rho;\n          image->resolution.y=image->resolution.x;\n          if ((flags & SigmaValue) != 0)\n            image->resolution.y=geometry_info.sigma;",
         "fix_summary": "SetImageProperty：调整相关实现（+5/-4 行）"
@@ -966,12 +2433,31 @@
       "location": {
         "file": "coders/wbmp.c",
         "line": 164,
-        "function": "ReadWBMPImage"
+        "function": "ReadWBMPImage",
+        "stack": [
+          {
+            "function": "ReadWBMPImage",
+            "file": "coders/wbmp.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ReadWBMPImage",
+            "file": "coders/wbmp.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/wbmp.c",
-        "function": "ReadWBMPImage",
-        "line": 164,
         "before": "",
         "after": "  header=0;",
         "fix_summary": "ReadWBMPImage：调整相关实现（+1/-0 行）"
@@ -989,12 +2475,51 @@
       "location": {
         "file": "MagickCore/draw.c",
         "line": 1666,
-        "function": "TracePoint"
+        "function": "TracePoint",
+        "stack": [
+          {
+            "function": "TracePoint",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "TraceBezier",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "TracePath",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawImage",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "ReadMVGImage",
+            "file": "coders/mvg.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "DrawImage",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "ReadMVGImage",
+            "file": "coders/mvg.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/draw.c",
-        "function": "TracePoint",
-        "line": 1666,
         "before": "  number_points=6553;",
         "after": "  number_points=8192;",
         "fix_summary": "DrawImage：增加边界或长度校验（+1/-1 行）"
@@ -1012,12 +2537,51 @@
       "location": {
         "file": "coders/hdr.c",
         "line": 485,
-        "function": "ReadHDRImage"
+        "function": "ReadHDRImage",
+        "stack": [
+          {
+            "function": "ReadHDRImage",
+            "file": "coders/hdr.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ReadHDRImage",
+            "file": "coders/hdr.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "AcquireQuantumMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "ReadHDRImage",
+            "file": "coders/hdr.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/hdr.c",
-        "function": "ReadHDRImage",
-        "line": 485,
         "before": "",
         "after": "  (void) ResetMagickMemory(pixels,0,4*image->columns*sizeof(*pixels));",
         "fix_summary": "ReadHDRImage：补齐缓冲区初始化/清零（+1/-0 行）"
@@ -1035,12 +2599,51 @@
       "location": {
         "file": "coders/miff.c",
         "line": 2240,
-        "function": "WriteMIFFImage"
+        "function": "WriteMIFFImage",
+        "stack": [
+          {
+            "function": "WriteMIFFImage",
+            "file": "coders/miff.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ReadMIFFImage",
+            "file": "coders/miff.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ParseGeometry",
+            "file": "MagickCore/geometry.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/miff.c",
-        "function": "WriteMIFFImage",
-        "line": 2240,
         "before": "",
         "after": "    SetGeometryInfo(&geometry_info);",
         "fix_summary": "ReadMIFFImage：调整相关实现（+2/-0 行）"
@@ -1058,12 +2661,43 @@
       "location": {
         "file": "coders/dcm.c",
         "line": 3964,
-        "function": "ReadDCMImage"
+        "function": "ReadDCMImage",
+        "stack": [
+          {
+            "function": "ReadDCMImage",
+            "file": "coders/dcm.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ReadDCMImage",
+            "file": "coders/dcm.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/dcm.c",
-        "function": "ReadDCMImage",
-        "line": 3964,
         "before": "            if ((info.scale != (Quantum *) NULL) &&",
         "after": "            if ((info.scale != (Quantum *) NULL) && (index >= 0) &&",
         "fix_summary": "ReadDCMImage：增加边界或长度校验（+4/-4 行）"
@@ -1081,12 +2715,47 @@
       "location": {
         "file": "coders/scr.c",
         "line": 232,
-        "function": "ReadSCRImage"
+        "function": "ReadSCRImage",
+        "stack": [
+          {
+            "function": "ReadSCRImage",
+            "file": "coders/scr.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ReadSCRImage",
+            "file": "coders/scr.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ReadSCRImage",
+            "file": "coders/scr.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/scr.c",
-        "function": "ReadSCRImage",
-        "line": 232,
         "before": "  (void) count;",
         "after": "  if (count != 6144)\n    ThrowReaderException(CorruptImageError,\"ImproperImageHeader\");\n  if (count != 768)\n    ThrowReaderException(CorruptImageError,\"ImproperImageHeader\");",
         "fix_summary": "ReadSCRImage：调整相关实现（+4/-1 行）"
@@ -1104,12 +2773,51 @@
       "location": {
         "file": "MagickCore/image.c",
         "line": 3700,
-        "function": "PushColormapIndex"
+        "function": "PushColormapIndex",
+        "stack": [
+          {
+            "function": "PushColormapIndex",
+            "file": "MagickCore/image.c"
+          },
+          {
+            "function": "SyncImage",
+            "file": "MagickCore/image.c"
+          },
+          {
+            "function": "ReadVIFFImage",
+            "file": "coders/viff.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "SetPixelIndex",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "ReadVIFFImage",
+            "file": "coders/viff.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/viff.c",
-        "function": "ReadVIFFImage",
-        "line": 519,
         "before": "",
         "after": "    (void) ResetMagickMemory(pixels,0,MagickMax(number_pixels,max_packets)*\n      bytes_per_pixel*sizeof(*pixels));",
         "fix_summary": "ReadVIFFImage：补齐缓冲区初始化/清零（+2/-0 行）"
@@ -1127,12 +2835,47 @@
       "location": {
         "file": "coders/viff.c",
         "line": 571,
-        "function": "ReadVIFFImage"
+        "function": "ReadVIFFImage",
+        "stack": [
+          {
+            "function": "ReadVIFFImage",
+            "file": "coders/viff.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "AcquireQuantumMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "ReadVIFFImage",
+            "file": "coders/viff.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/viff.c",
-        "function": "ReadVIFFImage",
-        "line": 571,
         "before": "",
         "after": "    (void) ResetMagickMemory(pixels,0,MagickMax(number_pixels,max_packets)*\n      bytes_per_pixel*sizeof(*pixels));",
         "fix_summary": "ReadVIFFImage：补齐缓冲区初始化/清零（+2/-0 行）"
@@ -1150,12 +2893,51 @@
       "location": {
         "file": "./MagickCore/pixel-accessor.h",
         "line": 783,
-        "function": "SetPixelViaPixelInfo"
+        "function": "SetPixelViaPixelInfo",
+        "stack": [
+          {
+            "function": "SetPixelViaPixelInfo",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "InsertRow",
+            "file": "coders/wpg.c"
+          },
+          {
+            "function": "UnpackWPGRaster",
+            "file": "coders/wpg.c"
+          },
+          {
+            "function": "ReadWPGImage",
+            "file": "coders/wpg.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "AcquireQuantumMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "UnpackWPGRaster",
+            "file": "coders/wpg.c"
+          },
+          {
+            "function": "ReadWPGImage",
+            "file": "coders/wpg.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/wpg.c",
-        "function": "UnpackWPGRaster",
-        "line": 446,
         "before": "",
         "after": "  (void) ResetMagickMemory(BImgBuff,0,(size_t) ldblk*8*sizeof(*BImgBuff));",
         "fix_summary": "UnpackWPGRaster：补齐缓冲区初始化/清零（+1/-0 行）"
@@ -1173,12 +2955,51 @@
       "location": {
         "file": "./MagickCore/quantum-private.h",
         "line": 504,
-        "function": "ScaleQuantumToShort"
+        "function": "ScaleQuantumToShort",
+        "stack": [
+          {
+            "function": "ScaleQuantumToShort",
+            "file": "./MagickCore/quantum-private.h"
+          },
+          {
+            "function": "ExportAlphaQuantum",
+            "file": "MagickCore/quantum-export.c"
+          },
+          {
+            "function": "ExportQuantumPixels",
+            "file": "MagickCore/quantum-export.c"
+          },
+          {
+            "function": "WritePSDChannel",
+            "file": "coders/psd.c"
+          },
+          {
+            "function": "WritePSDChannels",
+            "file": "coders/psd.c"
+          },
+          {
+            "function": "WritePSDLayersInternal",
+            "file": "coders/psd.c"
+          },
+          {
+            "function": "WritePSDImage",
+            "file": "coders/psd.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/psd.c",
-        "function": "ReadPSDMergedImage",
-        "line": 1949,
         "before": "      status=ReadPSDChannelRLE(image,psd_info,i,sizes+(i*image->rows),\n      status=ReadPSDChannelRaw(image,psd_info->channels,i,exception);",
         "after": "    ssize_t\n      type;\n\n    type=i;\n    if ((type == 1) && (psd_info->channels == 2))\n      type=-1;\n\n      status=ReadPSDChannelRLE(image,psd_info,type,sizes+(i*image->rows),\n      status=ReadPSDChannelRaw(image,psd_info->channels,type,exception);",
         "fix_summary": "ReadPSDMergedImage：调整相关实现（+9/-2 行）"
@@ -1196,12 +3017,51 @@
       "location": {
         "file": "./MagickCore/quantum.h",
         "line": 116,
-        "function": "ScaleQuantumToChar"
+        "function": "ScaleQuantumToChar",
+        "stack": [
+          {
+            "function": "ScaleQuantumToChar",
+            "file": "./MagickCore/quantum.h"
+          },
+          {
+            "function": "ExportRGBAQuantum",
+            "file": "MagickCore/quantum-export.c"
+          },
+          {
+            "function": "ExportQuantumPixels",
+            "file": "MagickCore/quantum-export.c"
+          },
+          {
+            "function": "WriteMIFFImage",
+            "file": "coders/miff.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ClonePixelCacheRepository",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "OpenPixelCache",
+            "file": "MagickCore/cache.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/miff.c",
-        "function": "ReadMIFFImage",
-        "line": 1249,
         "before": "",
         "after": "    (void) SetImageBackgroundColor(image,exception);",
         "fix_summary": "ReadMIFFImage：补齐缓冲区初始化/清零（+1/-0 行）"
@@ -1219,12 +3079,47 @@
       "location": {
         "file": "MagickCore/quantum-import.c",
         "line": 4189,
-        "function": "ImportQuantumPixels"
+        "function": "ImportQuantumPixels",
+        "stack": [
+          {
+            "function": "PushLongPixel",
+            "file": "./MagickCore/quantum-private.h"
+          },
+          {
+            "function": "ImportGrayQuantum",
+            "file": "MagickCore/quantum-import.c"
+          },
+          {
+            "function": "ImportQuantumPixels",
+            "file": "MagickCore/quantum-import.c"
+          },
+          {
+            "function": "ReadCINImage",
+            "file": "coders/cin.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "Magick::BlobRef::BlobRef(void const*, unsigned long)",
+            "file": "Magick++/lib/BlobRef.cpp"
+          },
+          {
+            "function": "Magick::Blob::Blob(void const*, unsigned long)",
+            "file": "Magick++/lib/Blob.cpp"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/quantum-import.c",
-        "function": "ImportQuantumPixels",
-        "line": 4189,
         "before": "          p=PushLongPixel(quantum_info->endian,p,&pixel);",
         "after": "              p=PushLongPixel(quantum_info->endian,p,&pixel);",
         "fix_summary": "ImportGrayQuantum：增加边界或长度校验（+1/-1 行）"
@@ -1242,12 +3137,51 @@
       "location": {
         "file": "./MagickCore/pixel-accessor.h",
         "line": 37,
-        "function": "ClampPixel"
+        "function": "ClampPixel",
+        "stack": [
+          {
+            "function": "ClampPixel",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "CompositeOverImage",
+            "file": "MagickCore/composite.c"
+          },
+          {
+            "function": "CompositeImage",
+            "file": "MagickCore/composite.c"
+          },
+          {
+            "function": "MontageImageList",
+            "file": "MagickCore/montage.c"
+          },
+          {
+            "function": "OverviewImage",
+            "file": "coders/pcd.c"
+          },
+          {
+            "function": "ReadPCDImage",
+            "file": "coders/pcd.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ClonePixelCacheRepository",
+            "file": "MagickCore/cache.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/pcd.c",
-        "function": "ReadPCDImage",
-        "line": 589,
         "before": "",
         "after": "  if (status == MagickFalse)\n    return(DestroyImageList(image));\n  status=ResetImagePixels(image,exception);",
         "fix_summary": "ReadPCDImage：补齐缓冲区初始化/清零（+3/-0 行）"
@@ -1265,12 +3199,51 @@
       "location": {
         "file": "MagickCore/image.c",
         "line": 3700,
-        "function": "PushColormapIndex"
+        "function": "PushColormapIndex",
+        "stack": [
+          {
+            "function": "PushColormapIndex",
+            "file": "MagickCore/image.c"
+          },
+          {
+            "function": "SyncImage",
+            "file": "MagickCore/image.c"
+          },
+          {
+            "function": "ReadMACImage",
+            "file": "coders/mac.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "AcquireAlignedMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "OpenPixelCache",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "GetImagePixelCache",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "SyncImagePixelCache",
+            "file": "MagickCore/cache.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/mac.c",
-        "function": "ReadMACImage",
-        "line": 154,
         "before": "",
         "after": "  if (status == MagickFalse)\n    return(DestroyImageList(image));\n  status=ResetImagePixels(image,exception);",
         "fix_summary": "ReadMACImage：补齐缓冲区初始化/清零（+3/-0 行）"
@@ -1288,12 +3261,51 @@
       "location": {
         "file": "./MagickCore/colormap-private.h",
         "line": 32,
-        "function": "ConstrainColormapIndex"
+        "function": "ConstrainColormapIndex",
+        "stack": [
+          {
+            "function": "ConstrainColormapIndex",
+            "file": "./MagickCore/colormap-private.h"
+          },
+          {
+            "function": "InsertRow",
+            "file": "coders/wpg.c"
+          },
+          {
+            "function": "UnpackWPG2Raster",
+            "file": "coders/wpg.c"
+          },
+          {
+            "function": "ReadWPGImage",
+            "file": "coders/wpg.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "AcquireQuantumMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "UnpackWPG2Raster",
+            "file": "coders/wpg.c"
+          },
+          {
+            "function": "ReadWPGImage",
+            "file": "coders/wpg.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/wpg.c",
-        "function": "UnpackWPG2Raster",
-        "line": 565,
         "before": "",
         "after": "  (void) ResetMagickMemory(BImgBuff,0,ldblk*sizeof(*BImgBuff));",
         "fix_summary": "UnpackWPG2Raster：补齐缓冲区初始化/清零（+1/-0 行）"
@@ -1311,12 +3323,51 @@
       "location": {
         "file": "MagickCore/image.c",
         "line": 3700,
-        "function": "PushColormapIndex"
+        "function": "PushColormapIndex",
+        "stack": [
+          {
+            "function": "PushColormapIndex",
+            "file": "MagickCore/image.c"
+          },
+          {
+            "function": "SyncImage",
+            "file": "MagickCore/image.c"
+          },
+          {
+            "function": "ReadTIMImage",
+            "file": "coders/tim.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "ClonePixelCacheRepository",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "OpenPixelCache",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "GetImagePixelCache",
+            "file": "MagickCore/cache.c"
+          },
+          {
+            "function": "QueueAuthenticPixelCacheNexus",
+            "file": "MagickCore/cache.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/tim.c",
-        "function": "ReadTIMImage",
-        "line": 252,
         "before": "",
         "after": "    status=SetImageExtent(image,image->columns,image->rows,exception);\n    if (status == MagickFalse)\n      return(DestroyImageList(image));\n    status=ResetImagePixels(image,exception);\n    if (status == MagickFalse)\n      return(DestroyImageList(image));",
         "fix_summary": "ReadTIMImage：补齐缓冲区初始化/清零（+6/-0 行）"
@@ -1334,12 +3385,51 @@
       "location": {
         "file": "MagickCore/image.c",
         "line": 3700,
-        "function": "PushColormapIndex"
+        "function": "PushColormapIndex",
+        "stack": [
+          {
+            "function": "PushColormapIndex",
+            "file": "MagickCore/image.c"
+          },
+          {
+            "function": "SyncImage",
+            "file": "MagickCore/image.c"
+          },
+          {
+            "function": "ReadPDBImage",
+            "file": "coders/pdb.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "SetPixelIndex",
+            "file": "./MagickCore/pixel-accessor.h"
+          },
+          {
+            "function": "ReadPDBImage",
+            "file": "coders/pdb.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/pdb.c",
-        "function": "ReadPDBImage",
-        "line": 420,
         "before": "",
         "after": "  (void) ResetMagickMemory(pixels,0,(packets+257UL)*image->rows*sizeof(*pixels));",
         "fix_summary": "ReadPDBImage：补齐缓冲区初始化/清零（+1/-0 行）"
@@ -1357,12 +3447,51 @@
       "location": {
         "file": "MagickCore/draw.c",
         "line": 1603,
-        "function": "DrawDashPolygon"
+        "function": "DrawDashPolygon",
+        "stack": [
+          {
+            "function": "DrawDashPolygon",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawPrimitive",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawImage",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "ReadMVGImage",
+            "file": "coders/mvg.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "DrawDashPolygon",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawPrimitive",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawImage",
+            "file": "MagickCore/draw.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/draw.c",
-        "function": "DrawDashPolygon",
-        "line": 1603,
         "before": "    (2UL*number_vertices+1UL),sizeof(*dash_polygon));",
         "after": "    (2UL*(number_vertices+1UL)+1UL),sizeof(*dash_polygon));",
         "fix_summary": "DrawDashPolygon 的分配式由 2*V+1 改为 2*(V+1)+1，为每个虚线顶点多留 1 个槽位。"
@@ -1380,12 +3509,51 @@
       "location": {
         "file": "MagickCore/draw.c",
         "line": 1597,
-        "function": "DrawDashPolygon"
+        "function": "DrawDashPolygon",
+        "stack": [
+          {
+            "function": "DrawDashPolygon",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawPrimitive",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawImage",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "ReadMVGImage",
+            "file": "coders/mvg.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "DrawDashPolygon",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawPrimitive",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawImage",
+            "file": "MagickCore/draw.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/draw.c",
-        "function": "DrawDashPolygon",
-        "line": 1597,
         "before": "    (2UL*number_vertices+1UL),sizeof(*dash_polygon));",
         "after": "    (2UL*(number_vertices+2UL)+1UL),sizeof(*dash_polygon));",
         "fix_summary": "分配式由 2*(V+1)+1 扩到 2*(V+2)+1，再多留 1 个顶点。"
@@ -1403,12 +3571,51 @@
       "location": {
         "file": "coders/pdb.c",
         "line": 886,
-        "function": "WritePDBImage"
+        "function": "WritePDBImage",
+        "stack": [
+          {
+            "function": "WritePDBImage",
+            "file": "coders/pdb.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::write(Magick::Blob*, std::__1::basic_string<char, std::__1::char_traits<char>, std::__1::allocator<char> > const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "CopyMagickMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "WritePDBImage",
+            "file": "coders/pdb.c"
+          },
+          {
+            "function": "WriteImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "WriteImages",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "ImagesToBlob",
+            "file": "MagickCore/blob.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/pdb.c",
-        "function": "WritePDBImage",
-        "line": 886,
         "before": "",
         "after": "  (void) ResetMagickMemory(buffer,0,512*sizeof(*buffer));",
         "fix_summary": "ReadPDBImage：补齐缓冲区初始化/清零（+2/-1 行）"
@@ -1426,12 +3633,51 @@
       "location": {
         "file": "MagickCore/string.c",
         "line": 697,
-        "function": "ConstantString"
+        "function": "ConstantString",
+        "stack": [
+          {
+            "function": "ConstantString",
+            "file": "MagickCore/string.c"
+          },
+          {
+            "function": "SetImageProperty",
+            "file": "MagickCore/property.c"
+          },
+          {
+            "function": "ReadRLEImage",
+            "file": "coders/rle.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "AcquireQuantumMemory",
+            "file": "MagickCore/memory.c"
+          },
+          {
+            "function": "ReadRLEImage",
+            "file": "coders/rle.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "coders/rle.c",
-        "function": "ReadRLEImage",
-        "line": 315,
         "before": "            comment[length-1]='\\0';\n            (void) SetImageProperty(image,\"comment\",comment,exception);",
         "after": "            if (count == (length-1))\n              {\n                comment[length-1]='\\0';\n                (void) SetImageProperty(image,\"comment\",comment,exception);\n              }",
         "fix_summary": "ReadRLEImage：调整相关实现（+5/-2 行）"
@@ -1449,12 +3695,51 @@
       "location": {
         "file": "MagickCore/draw.c",
         "line": 1597,
-        "function": "DrawDashPolygon"
+        "function": "DrawDashPolygon",
+        "stack": [
+          {
+            "function": "DrawDashPolygon",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawPrimitive",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawImage",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "ReadMVGImage",
+            "file": "coders/mvg.c"
+          },
+          {
+            "function": "ReadImage",
+            "file": "MagickCore/constitute.c"
+          },
+          {
+            "function": "BlobToImage",
+            "file": "MagickCore/blob.c"
+          },
+          {
+            "function": "Magick::Image::read(Magick::Blob const&)",
+            "file": "Magick++/lib/Image.cpp"
+          },
+          {
+            "function": "DrawDashPolygon",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawPrimitive",
+            "file": "MagickCore/draw.c"
+          },
+          {
+            "function": "DrawImage",
+            "file": "MagickCore/draw.c"
+          }
+        ]
       },
       "code_snippet": {
-        "file": "MagickCore/draw.c",
-        "function": "DrawDashPolygon",
-        "line": 1597,
         "before": "    (2UL*number_vertices+1UL),sizeof(*dash_polygon));",
         "after": "    (2UL*(number_vertices+3UL)+3UL),sizeof(*dash_polygon));",
         "fix_summary": "分配式由 2*(V+3)+1 扩到 2*(V+3)+3，多留 1 个顶点并额外 3 个元素。"

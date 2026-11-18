@@ -181,7 +181,9 @@ verify-one-by-one.sh [--report DIR] [--tree DIR]
 
 `cases.tsv` 的列为 `localId coder sanitizer alert expect_frame poc patch fix_commit`。63 个案例关联 61 个唯一补丁，其中 `60cb93d0` 和 `78eaf41a` 各对应 2 条，其余 59 个补丁各对应 1 条。补丁按 fix commit 命名，内容可能经过适配，因此上游 `git show` 不能代替随包补丁文件。
 
-`vulnerabilities.json` 包含 project、repo、baseline、paths 和 vulnerabilities；各漏洞提供 id、type、location、code_snippet、description 和 patch 路径。
+`vulnerabilities.json` 包含 project、repo、baseline、paths 和 vulnerabilities；各漏洞提供 id、type、location、code_snippet、description 和 patch 路径。`code_snippet` 只含 `before`、`after`、`fix_summary`，不带文件、函数和行号；片段位置就是 `patch` 里对应 hunk 的位置，与 `location`（崩溃报告位置，即 sanitizer 栈顶）可以不同——63 个案例中有 37 个的修复点不在报告文件里（典型是报在 `MagickCore/quantum.h`、`pixel-accessor.h` 等头文件内联函数，修复落在调用方 `coders/*.c`），这种对应关系写在 `description` 开头。
+
+`location.stack` 是报告里的调用链，从第一个业务帧开始（去掉 `Magick++/fuzz/encoder_fuzzer.cc` 里的 `LLVMFuzzerTestOneInput`），由内向外、最多 10 帧（本包 5–10 帧；每帧只记函数和文件，不记行号），`stack` 里必有一帧的函数、文件与 `location` 相同（通常是首帧；42518438 的首帧 `PushLongPixel`（`./MagickCore/quantum-private.h`）定位不到源码行，`location` 因此用其后第一个可定位的 `ImportQuantumPixels`）。63 条案例分布在 44 个位置上，其中 12 个位置被多条案例共享，`stack` 到函数/文件粒度把 9 个完全分开：`MagickCore/quantum.h:116 ScaleQuantumToChar` 的 7 条分别经 `WriteTXTImage`、`WritePALMImage`、`WriteVIFFImage`、`WritePICTImage`、`WritePCXImage`、`WriteSUNImage`、`WriteMIFFImage` 写出，`MagickCore/image.c:3700 PushColormapIndex` 的 4 条分别来自 `ReadVIFFImage`、`ReadMACImage`、`ReadTIMImage`、`ReadPDBImage`。剩下 3 个位置（`MagickCore/locale.c:1518`、`MagickCore/xml-tree.c:1722`、`MagickCore/draw.c:1597`）两条案例的栈完全相同，要靠 `patch` 和 `description` 区分。
 
 当前随包报告是 2026-11-16 用本目录脚本在既有镜像上重跑的结果（`--tree /src/imagemagick`），记录如下；它们不包含运行日期、环境及实际摘要：
 
