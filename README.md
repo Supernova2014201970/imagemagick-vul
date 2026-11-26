@@ -1,8 +1,8 @@
 # ImageMagick ARVO 漏洞数据集
 
-本项目提供一套 ImageMagick 漏洞基线、63 个 PoC 和 61 个独立修复补丁，用于源码构建、漏洞复现和单补丁验证。基线是上游真实提交 `13ffeabe9abd6c262a8b6bfaeb1e145a420f8e3a`（2018-01-16，`7.0.7-21-82-g13ffeab`）。镜像保留该检出的 `.git` 历史；修复版在验证时复制源码、应用指定补丁后生成，不常驻第二棵源码树。
+本项目提供一套 ImageMagick 漏洞基线、63 个 PoC 和 61 个独立修复补丁，用于源码构建、漏洞复现和单补丁验证。基线是上游真实提交 `13ffeabe9abd6c262a8b6bfaeb1e145a420f8e3a`（2018-01-16，`7.0.7-21-82-g13ffeab`）。镜像基于 Ubuntu 22.04，检出的 `.git` 只含该提交（浅历史），工作区干净；修复版在验证时复制源码、应用指定补丁后生成，不常驻第二棵源码树。
 
-本文于 2026-11-16 按当前目录和脚本实现更新。文件大小与 SHA256 见 [MANIFEST.md](MANIFEST.md)。可复用的仓库命名、目录、数据格式与验收要求见 [漏洞数据仓库规约](SPECIFICATION.md)。本次在既有镜像内用更新后的脚本重跑了基线与逐补丁验证，`reports/` 是这批运行的结果；镜像本身没有重建。
+本文于 2026-11-25 按当前目录和脚本实现更新，镜像定义已统一为 Ubuntu 22.04 单一版本。文件大小与 SHA256 见 [MANIFEST.md](MANIFEST.md)。可复用的仓库命名、目录、数据格式与验收要求见 [漏洞数据仓库规约](SPECIFICATION.md)。`reports/` 中的结果全部来自 22.04 镜像：基线汇总与单案例报告于 2026-11-25 在新构建的镜像内重跑，逐补丁报告与基线明细沿用 2026-11-23 同工具链镜像的运行。
 
 ## 1. 目录结构
 
@@ -18,17 +18,16 @@ imagemagick-vul/
 │   ├── patches/*.patch        61 份独立补丁
 │   └── pocs/<localId>/poc     63 个输入文件
 ├── scripts/                  构建、复现与报告入口
-└── reports/                  已有基线、单案例及逐补丁验证报告
+└── reports/                  基线、单案例、逐补丁验证报告与基线明细
 ```
 
 当前目录未附 `imagemagick-vul.tar`、其校验文件或 `.dockerignore`。可以从 Dockerfile 构建镜像；离线 tar 需要另行导出。Docker 构建不复制本地 `src/`，但当前没有 `.dockerignore` 排除它，因此它仍可能进入构建上下文。
 
 ## 2. 构建与运行
 
-需要启动支持 Linux 容器的 Docker，并能拉取指定基础镜像。以下命令在项目根目录执行（PowerShell 和 Bash 均可逐行运行）：
+需要启动支持 Linux 容器的 Docker，并且构建阶段能访问 `archive.ubuntu.com` 和 GitHub。以下命令在项目根目录执行（PowerShell 和 Bash 均可逐行运行）：
 
 ```bash
-docker pull n132/arvo:42518038-vul@sha256:fce885bd28185e1f08512fad0085714b32526187f7041fb7941965e8fd8de124
 docker build -f image/Dockerfile -t imagemagick-vul:13ffeab .
 docker run -dit --name imvul --security-opt seccomp=unconfined imagemagick-vul:13ffeab
 docker exec imvul build.sh
@@ -38,11 +37,23 @@ docker exec imvul verify-one.sh 42518438 --patched --report /tmp/one-after
 docker exec imvul verify-one-by-one.sh --report /tmp/patched-report
 ```
 
+镜像基于官方 `ubuntu:22.04`：构建时安装 clang 14，下载 LLVM 14.0.6 源码把 libc++/libc++abi 以 MSan 插桩方式装进 `/usr/msan`，并按固定提交拉取 ImageMagick（浅历史）。国内网络可改用镜像源或本地 tarball（参数细节见 Dockerfile 开头注释）：
+
+```bash
+docker build -f image/Dockerfile \
+  --build-arg APT_MIRROR=http://repo.huaweicloud.com/ubuntu \
+  --build-arg LLVM_PROJECT_URL=http://host.docker.internal:8000/llvm-project-14.0.6.src.tar.xz \
+  --build-arg IMAGEMAGICK_TARBALL_URL=http://host.docker.internal:8000/imagemagick-13ffeabe.tar.gz \
+  -t imagemagick-vul:13ffeab .
+```
+
+`APT_PROXY` 只在构建容器能访问该代理时设置；`JOBS` 控制 libc++ 编译并行度（默认 4）；`NORMALIZE_POCS=1`（默认）负责恢复 6 个 PoC 的 LF 字节。
+
 `/opt/imdt` 在镜像的 `PATH` 首位，脚本可以直接用名字调用；写成绝对路径 `/opt/imdt/build.sh` 效果相同。
 
 三个验证脚本都接受 `--tree DIR`，用于测试 `/src/imagemagick` 之外的另一份源码（默认取自 `$IMDT_TREE`，再默认 `/src/imagemagick`）；原始目录只读，`--patched` 只复制后再应用补丁。
 
-MSan 的执行路径使用 `setarch x86_64 -R`，上述容器参数放开 seccomp 限制以支持它。镜像中的工具链来自 2018 年时期的 ARVO / OSS-Fuzz 环境，包括 Clang 6.0 和 MSan 插桩版 libc++。
+MSan 的执行路径使用 `setarch x86_64 -R`，上述容器参数放开 seccomp 限制以支持它。工具链是 Ubuntu 22.04 的 clang 14、glibc 2.35，以及 `/usr/msan` 下自行编译的插桩版 libc++/libc++abi 14.0.6；发行版自带的 `libc++.a` 没有插桩，不能用于 MSan。
 
 导出测试报告：
 
@@ -58,16 +69,17 @@ docker save -o imagemagick-vul.tar imagemagick-vul:13ffeab
 docker load -i imagemagick-vul.tar
 ```
 
-构建成功后镜像保存在本机 Docker 中，不要求额外保留 tar。只有在基础镜像已缓存时，才可以不依赖远端拉取来重建。
+构建成功后镜像保存在本机 Docker 中，不要求额外保留 tar。重建需要能访问 `ubuntu:22.04`、LLVM 14.0.6 源码和 ImageMagick 的固定提交（或准备等价的本地替代），仅靠已构建好的镜像本身不能离线重建。
 
 ## 3. Dockerfile 做什么
 
-1. 使用 digest 固定的 `n132/arvo:42518038-vul` 基础镜像。
-2. 复制 `payload/` 到 `/payload`、`scripts/` 到 `/opt/imdt`、`reports/` 到 `/opt/imdt/reports`。
-3. 清理旧 fuzz 工具、旧输出和临时目录，把 `/src/imagemagick` 恢复到指定基线提交，检查日期和工作区。
-4. 用 `ensure_repro` 编译 ASan、MSan 两个基线复现程序，保留 `/out` 产物，清空 `/work`。随包案例不使用 UBSan，`lib.sh` 仍接受 `undefined` 以便测试其他源码。
-5. 断言源码、补丁、PoC、案例数和复现程序的布局。构建阶段不逐个运行 63 个 PoC。
-6. 默认工作目录为 `/opt/imdt`，默认启动 `/bin/bash`。
+1. 以 `ubuntu:22.04` 为基础，只安装编译依赖，不装 ImageMagick 的委托库开发包（freetype、jpeg、png、tiff、webp、openjpeg 等），否则 `hand_repro.cc` 会因新增符号而链接失败。
+2. 下载 LLVM 14.0.6 源码，把 libc++abi、libc++ 以 `-fsanitize=memory` 编译安装到 `/usr/msan`，并检查产物里有 `__msan_` 符号。
+3. 在 `/src/imagemagick` 拉取固定提交 `13ffeab` 的源码（`.git` 只含该提交），断言 HEAD 与工作区干净；源码不打任何补丁。
+4. 复制 `payload/` 到 `/payload`、`scripts/` 到 `/opt/imdt`、`reports/` 到 `/opt/imdt/reports`，并把 6 个受 Windows CRLF 影响的 PoC 还原为 LF。
+5. 用 `ensure_repro` 编译 ASan、MSan 两个基线复现程序，保留 `/out` 产物，清空 `/work`。随包案例不使用 UBSan，`lib.sh` 仍接受 `undefined` 以便测试其他源码。
+6. 断言源码、补丁、PoC、案例数和复现程序的布局。构建阶段不逐个运行 63 个 PoC。
+7. 默认工作目录为 `/opt/imdt`，默认启动 `/bin/bash`。
 
 ```text
 /src/imagemagick      基线源码与 .git
@@ -77,7 +89,7 @@ docker load -i imagemagick-vul.tar
 /work                初始为空；运行时用于副本和构建
 ```
 
-Dockerfile 开头注释中的构建示例漏写了 `-f image/Dockerfile`，应使用第 2 节命令。`utilities/magick -version` 与 `git describe` 的版本字符串可能不同，源码身份以固定提交为准。
+`utilities/magick -version` 与 `git describe` 的版本字符串可能不同；镜像里的 `.git` 只有这一个提交，`git describe` 不会给出 `7.0.7-21-82-g13ffeab`。源码身份以固定提交为准。
 
 ## 4. scripts/ 的分工
 
@@ -101,7 +113,7 @@ verify-one.sh → lib.sh / ensure_repro → 插桩库 + hand_repro.cc
 ### 4.1 普通编译
 
 ```bash
-build.sh [DIR]
+build.sh [--tree DIR]
 ```
 
 默认目录 `/src/imagemagick`。没有 `Makefile` 才运行配置，然后执行 `make -j$(nproc)`。配置参数为 `--disable-shared --disable-docs --disable-openmp --without-perl`，不执行 `make install`。日志为 `/tmp/plain-configure.log` 和 `/tmp/plain-make.log`。
@@ -112,7 +124,7 @@ build.sh [DIR]
 
 `TREE` 默认 `/src/imagemagick`，可用环境变量 `IMDT_TREE` 或三个验证脚本的 `--tree DIR` 覆盖；`PAYLOAD`、`OUT`、`WORK` 分别默认 `/payload`、`/out`、`/work`。
 
-`ensure_repro <srcdir> <address|undefined|memory>` 计算源码指纹，命中 `/out` 缓存则返回程序路径；否则复制源码（排除 `.git`）到 `/work/build-<fp>-<san>/src`，清理旧普通构建产物，执行配置、插桩编译、安装静态库和链接驱动。配置检测先使用普通参数，插桩在 make 阶段加入；MSan 额外链接 `/usr/msan/lib`。最后用 `nm` 检查 sanitizer 符号。
+`ensure_repro <srcdir> <address|undefined|memory>` 计算源码指纹，命中 `/out` 缓存则返回程序路径；否则复制源码（排除 `.git`）到 `/work/build-<fp>-<san>/src`，清理旧普通构建产物，执行配置、插桩编译、安装静态库和链接驱动。配置检测先使用普通参数，插桩在 make 阶段加入；MSan 额外链接 `/usr/msan/lib`。在 22.04 上，make 沿用 configure 写进 `Makefile` 的 `CFLAGS`（委托库头文件路径、quantum 配置）再追加插桩参数，MSan 还加 `-fPIE`/`-pie` 并补链 `-lc++abi`（clang 14 的 `-stdlib=libc++` 只加 `-lc++`）。最后用 `nm` 检查 sanitizer 符号。
 
 指纹是 `<提交前8位>-<sha256(git diff)前8位>`，干净基线为 `13ffeabe-e3b0c442`。它不包含已暂存修改、未跟踪文件、驱动内容或工具链配置；这些变化不能保证使缓存失效。自定义源码测试时应确保目标修改体现在普通 `git diff` 中，并处理不适用的缓存。
 
@@ -185,13 +197,14 @@ verify-one-by-one.sh [--report DIR] [--tree DIR]
 
 `location.stack` 是报告里的调用链，从第一个业务帧开始（去掉 `Magick++/fuzz/encoder_fuzzer.cc` 里的 `LLVMFuzzerTestOneInput`），由内向外、最多 10 帧（本包 5–10 帧；每帧只记函数和文件，不记行号），`stack` 里必有一帧的函数、文件与 `location` 相同（通常是首帧；42518438 的首帧 `PushLongPixel`（`./MagickCore/quantum-private.h`）定位不到源码行，`location` 因此用其后第一个可定位的 `ImportQuantumPixels`）。63 条案例分布在 44 个位置上，其中 12 个位置被多条案例共享，`stack` 到函数/文件粒度把 9 个完全分开：`MagickCore/quantum.h:116 ScaleQuantumToChar` 的 7 条分别经 `WriteTXTImage`、`WritePALMImage`、`WriteVIFFImage`、`WritePICTImage`、`WritePCXImage`、`WriteSUNImage`、`WriteMIFFImage` 写出，`MagickCore/image.c:3700 PushColormapIndex` 的 4 条分别来自 `ReadVIFFImage`、`ReadMACImage`、`ReadTIMImage`、`ReadPDBImage`。剩下 3 个位置（`MagickCore/locale.c:1518`、`MagickCore/xml-tree.c:1722`、`MagickCore/draw.c:1597`）两条案例的栈完全相同，要靠 `patch` 和 `description` 区分。
 
-当前随包报告是 2026-11-16 用本目录脚本在既有镜像上重跑的结果（`--tree /src/imagemagick`），记录如下；它们不包含运行日期、环境及实际摘要：
+当前随包报告全部来自 Ubuntu 22.04 镜像（`--tree /src/imagemagick`）：`reports/verify.json` 与 `reports/verify-one.json` 是 2026-11-25 在新构建镜像内重跑的结果；`reports/verify-one-by-one.json` 和 `reports/baseline-2204.tsv` 是 2026-11-23 同工具链镜像的 63 条逐补丁运行和基线逐条明细（TSV 带 PRETTY_NAME、glibc、clang 版本及每条 `SUMMARY:`）。三个 JSON 仍不包含运行日期、环境及实际摘要：
 
-| 文件 | 顶层 pass | 顶层 fail | 结果数 |
-| --- | --- | --- | --- |
-| `reports/verify.json` | 0 | 63 | 63 |
-| `reports/verify-one.json` | 0 | 1 | 1 |
-| `reports/verify-one-by-one.json` | 63 | 0 | 63 |
+| 文件 | 顶层 pass | 顶层 fail | 结果数 | 来源运行 |
+| --- | --- | --- | --- | --- |
+| `reports/verify.json` | 0 | 63 | 63 | 2026-11-25 基线汇总 |
+| `reports/verify-one.json` | 0 | 1 | 1 | 2026-11-25 单案例（42518438） |
+| `reports/verify-one-by-one.json` | 63 | 0 | 63 | 2026-11-23 逐补丁 |
+| `reports/baseline-2204.tsv` | — | — | 63 | 2026-11-23 基线逐条明细 |
 
 Windows 上本地源码副本的可执行权限可能与 Linux 有差异。需要构建时优先使用镜像中的固定工具链和源码。文件清单描述当前磁盘内容；不沿用旧镜像 ID、tar 大小和未经本次确认的性能数据。
 

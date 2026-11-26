@@ -94,6 +94,7 @@ run_poc() {
 # /out/repro-<fp>-<san> is the cache: the fingerprint already encodes the source.
 ensure_repro() {
   local dir=${1:?} s fp bld inst bin base sanflags cflags plain
+  local pie ldp msan_libs conf_cflags
   s=$(san_profile "${2:?}")
   [ -d "$dir" ] || die "no such source tree: $dir"
   [ -f "$dir/configure" ] || die "$dir/configure missing (it is tracked; never regenerate)"
@@ -105,6 +106,15 @@ ensure_repro() {
   # Plain flags at configure time: an MSan-instrumented probe cannot run during
   # feature detection, so instrumentation is injected at make time only.
   plain="-O1 -gline-tables-only -DFUZZING_BUILD_MODE_UNSAFE_FOR_PRODUCTION"
+  # 22.04 keeps delegate headers outside /usr/include (freetype2, openjpeg-2.4,
+  # libxml2, uuid).  configure records them in Makefile's CFLAGS; overriding
+  # CFLAGS outright would drop them, so keep that value and append the
+  # sanitizer flags.  MSan also needs a PIE executable for its shadow mapping.
+  pie=""; [ "$s" = memory ] && pie="-fPIE"
+  ldp=""; [ "$s" = memory ] && ldp="-pie"
+  # clang 14 on 22.04 adds -lc++ but not -lc++abi for -stdlib=libc++, and the
+  # instrumented libc++.a needs cxa_* / typeinfo from libc++abi.a.
+  msan_libs=""; [ "$s" = memory ] && msan_libs="-Wl,--start-group -lc++ -lc++abi -Wl,--end-group"
 
   rm -rf "$bld"; mkdir -p "$bld/src" "$OUT"
   ( cd "$dir" && tar -cf - --exclude=./.git . ) | ( cd "$bld/src" && tar -xf - ) ||
@@ -122,18 +132,19 @@ ensure_repro() {
     ./configure --prefix="$inst" --disable-shared --disable-docs \
     --disable-openmp --without-perl > "$bld/configure.log" 2>&1 ||
     { tail -n 6 "$bld/configure.log" >&2; die "configure failed ($fp/$s)"; }
+  conf_cflags=$(sed -n 's/^CFLAGS = //p' Makefile | head -n 1)
   echo "make    $fp/$s" >&2
-  make -j"$(nproc)" CFLAGS="$cflags" CXXFLAGS="$cflags -stdlib=libc++" LDFLAGS="$sanflags" \
+  make -j"$(nproc)" CFLAGS="$conf_cflags $sanflags $pie" CXXFLAGS="$conf_cflags $sanflags $pie -stdlib=libc++" LDFLAGS="$sanflags $ldp" \
     > "$bld/make.log" 2>&1 || { tail -n 20 "$bld/make.log" >&2; die "make failed ($fp/$s)"; }
-  make install CFLAGS="$cflags" CXXFLAGS="$cflags -stdlib=libc++" LDFLAGS="$sanflags" \
+  make install CFLAGS="$conf_cflags $sanflags $pie" CXXFLAGS="$conf_cflags $sanflags $pie -stdlib=libc++" LDFLAGS="$sanflags $ldp" \
     > "$bld/install.log" 2>&1 || { tail -n 20 "$bld/install.log" >&2; die "make install failed ($fp/$s)"; }
 
   echo "link    $bin" >&2
-  clang++ $cflags -stdlib=libc++ $(san_link_extra "$s") -std=c++11 \
+  clang++ $cflags $pie -stdlib=libc++ $(san_link_extra "$s") -std=c++11 \
     -I"$inst/include/ImageMagick-7" "$IMDT_HOME/hand_repro.cc" -o "$bin.new" \
     -DMAGICKCORE_HDRI_ENABLE=1 -DMAGICKCORE_QUANTUM_DEPTH=16 \
     "$inst/lib/libMagick++-7.Q16HDRI.a" "$inst/lib/libMagickWand-7.Q16HDRI.a" \
-    "$inst/lib/libMagickCore-7.Q16HDRI.a" -lpthread -lm ||
+    "$inst/lib/libMagickCore-7.Q16HDRI.a" -lpthread $msan_libs -lm ||
     die "hand reproducer build failed ($fp/$s)"
   mv -f "$bin.new" "$bin"
 

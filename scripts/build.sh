@@ -3,14 +3,22 @@
 # reproducer, just the project's own configure and make.  This is the build a
 # static-analysis or repair tool can drive.
 #
-#   build.sh [DIR]                default: /src/imagemagick
+#   build.sh [--tree DIR]         default: /src/imagemagick
 #
 # In-tree, so <DIR>/utilities/magick appears.  Re-running is cheap: configure is
 # skipped once a Makefile exists, and make is incremental.
 set -euo pipefail
 . "$(dirname "$0")/lib.sh"
 
-dir=${1:-$TREE}
+dir=$TREE
+while [ $# -gt 0 ]; do
+  case $1 in
+    --tree) dir=${2:?--tree needs a directory}; shift 2 ;;
+    -h|--help) sed -n '2,4p' "$0"; exit 0 ;;
+    -*) die "unknown argument $1" ;;
+    *) dir=$1; shift ;;
+  esac
+done
 [ -d "$dir" ] || die "no such directory: $dir"
 [ -f "$dir/configure" ] || die "$dir/configure missing (it is tracked; never regenerate)"
 start=$(date +%s)

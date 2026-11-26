@@ -78,6 +78,7 @@
     "note": "基线说明"
   },
   "paths": {
+    "cases": "cases.tsv",
     "pocs": "pocs/<localId>/poc",
     "patches": "patches/<fix_commit>.patch"
   },
@@ -140,7 +141,7 @@ PoC 保存为 `payload/pocs/<case_id>/poc`，
 
 | 接口 | 职责 |
 | --- | --- |
-| `build.sh [DIR]` | 普通构建指定源码并检查产物，不运行 PoC |
+| `build.sh [--tree DIR]` | 普通构建指定源码并检查产物，不运行 PoC |
 | `verify-one.sh ID [--tree DIR]` | 在指定源码（缺省基线）上测试一个案例 |
 | `verify-one.sh ID --patched [--tree DIR]` | 复制指定源码、应用当前案例补丁，测试同一个 PoC |
 | `verify.sh [--tree DIR]` | 遍历全部案例，汇总基线结果 |
